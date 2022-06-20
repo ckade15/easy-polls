@@ -3,12 +3,13 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const http = require('http');
 const dotenv = require('dotenv');
+const path = require('path')
 const { Server } = require('socket.io');
 const cors = require('cors');
 const connectDB = require('./config/db');
 
 // DOTENV Config
-dotenv.config({path: '../.env'});
+require('dotenv').config({ path: path.resolve(__dirname, '../.env') })
 
 // Express Config
 const app = express();
@@ -21,6 +22,8 @@ app.use(function(req, res, next) {
     next(); 
   });
 
+
+/* Socket.io for handling poll voting */
 const server = http.createServer(app);
 const io = new Server(server, {
     cors: {
@@ -28,7 +31,23 @@ const io = new Server(server, {
         methods: ['GET', 'POST', 'PUT', 'DELETE'],
     }
 });
+io.on('connection', (socket) => {
+    console.log('a user connected');
 
+    socket.on('joinPoll', ({pollId, userId}))
+
+    socket.on('vote', (pollId, index) => {
+
+    })
+    
+    socket.on('disconnect', () => {
+        console.log('user disconnected');
+    });
+
+    socket.on('error', (err) => {
+        console.log(err);
+    });
+});
 
 
 connectDB();
