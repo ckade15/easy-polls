@@ -7,23 +7,23 @@ router
     .get((req, res) => {
         res.send('Create Poll page');
     })
-    //.post(controller.register);
+    .post(controller.createPoll);
 
 router
     .route('/vote')
     .get((req, res) => {
         res.send('Vote page');
     })
-    //.post(controller.signin);
+    .post(controller.vote);
 router
     .route('/pollId/:pollId')
-    .get((req, res) => {
-        res.send('Get Poll page');
-    })
+    .get(controller.getPoll)
+
 router
     .route('delete/:pollId')
     .get((req, res) => {
         res.send('Delete Poll page');
     })
+    .delete(controller.deletePoll);
 
 module.exports = router;
