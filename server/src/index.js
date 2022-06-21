@@ -31,6 +31,7 @@ const io = new Server(server, {
         methods: ['GET', 'POST', 'PUT', 'DELETE'],
     }
 });
+
 io.on('connection', (socket) => {
     console.log('a user connected');
 
@@ -54,12 +55,13 @@ connectDB();
 
  
 // Routes for API
-app.use('/api', require('./routes/index'));
+app.use('/api/user', require('./routes/user.routes'));
+app.use('/api/poll', require('./routes/poll.routes'));
 
 // Start Server
 app.get('/', (req, res) => {
     res.send("Easy Poll API running");
-})
+});
 
 const PORT = process.env.PORT || 5001;
 

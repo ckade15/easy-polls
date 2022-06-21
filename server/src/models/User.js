@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const User = new mongoose.model(
     "User",
     new mongoose.Schema({
+        _id: mongoose.Schema.Types.ObjectId,
         firstName: {
             type: String,
             trim: true
@@ -30,18 +31,6 @@ const User = new mongoose.model(
             type: Date,
             default: Date.now
         },
-        polls: [
-            {
-                _id: Number,
-                item: [{
-                    title: String,
-                    votes: Number
-                }],
-                pollStatus: Boolean,
-                createdAt: Date,
-                createdBy: String,
-            }
-        ],
         sessionToken: {
             type: String,
             default: ''

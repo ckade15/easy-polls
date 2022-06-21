@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const nodemail = require('../config/auth_email');
 
-// @route Post api/register
+// @route Post api/user/register
 // @desc Register user
 // @params email, firstName, lastName, email, password
 // @access Private
@@ -119,7 +119,8 @@ exports.register = async (req, res, next) => {
     }
 };
 
-// @route Post api/signin
+
+// @route Post api/user/signin
 // @desc Sign in user
 // @params email, password
 // @access Public
@@ -202,7 +203,8 @@ exports.signin = async (req, res, next) => {
     }
 }
 
-// @route Get api/confirm/:confirmationCode
+
+// @route Get api/user/confirm/:confirmationCode
 // @desc Confirm user account
 // @params confirmationCode
 // @access Private
@@ -222,11 +224,10 @@ exports.confirm = async (req, res, next) => {
 };
 
 
-// @route Post api/checkToken
+// @route Post api/user/checkToken
 // @desc Checks if the session token is valid
 // @params sessionToken
 // @access Private
-
 exports.checkToken = async (req, res, next) => {
     const sessionToken = req.body.sessionToken;
     const user = await User.findOne({sessionToken: sessionToken});
