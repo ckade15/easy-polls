@@ -1,6 +1,6 @@
 import React from "react";
 
-export default signIn = (props) => {
+export default register = (props) => {
     return (
         <section></section>
     );

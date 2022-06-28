@@ -1,6 +1,6 @@
 import React from "react";
 
-export default signIn = (props) => {
+export default mustBeMember = (props) => {
     return (
         <section></section>
     );
