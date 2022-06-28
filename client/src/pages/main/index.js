@@ -2,7 +2,7 @@ import React from "react";
 
 const Main = (props) => {
     return (
-        <section>Main</section>
+        <section className="bg-red-300">Main</section>
     );
 }
 
