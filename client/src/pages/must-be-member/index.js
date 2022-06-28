@@ -1,7 +1,9 @@
 import React from "react";
 
-export default mustBeMember = (props) => {
+const MustBeMember = (props) => {
     return (
         <section></section>
     );
 }
+
+export default MustBeMember;

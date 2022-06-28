@@ -1,7 +1,9 @@
 import React from "react";
 
-export default createPoll = (props) => {
+const CreatePoll = (props) => {
     return (
         <section></section>
     );
 }
+
+export default CreatePoll;

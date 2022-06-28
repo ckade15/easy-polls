@@ -1,7 +1,9 @@
 import React from "react";
 
-export default poll = (props) => {
+const Poll = (props) => {
     return (
         <section></section>
     );
 }
+
+export default Poll;

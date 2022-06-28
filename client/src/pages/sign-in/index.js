@@ -1,7 +1,9 @@
 import React from "react";
 
-export default signIn = (props) => {
+const SignIn = (props) => {
     return (
-        <section></section>
+        <section>Sign In</section>
     );
 }
+
+export default SignIn;

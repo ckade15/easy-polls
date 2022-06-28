@@ -1,7 +1,9 @@
 import React from "react";
 
-export default profile = (props) => {
+const Profile = (props) => {
     return (
-        <section></section>
+        <section>Profile</section>
     );
 }
+
+export default Profile;

@@ -1,7 +1,9 @@
 import React from "react";
 
-export default pageNotFound = (props) => {
+const PageNotFound = (props) => {
     return (
         <section></section>
     );
 }
+
+export default PageNotFound;

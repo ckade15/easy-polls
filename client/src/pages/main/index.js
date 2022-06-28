@@ -1,7 +1,9 @@
 import React from "react";
 
-export default main = (props) => {
+const Main = (props) => {
     return (
-        <section></section>
+        <section>Main</section>
     );
 }
+
+export default Main;

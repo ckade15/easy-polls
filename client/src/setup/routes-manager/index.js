@@ -1,36 +1,32 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import reportWebVitals from './reportWebVitals';
-import {BrowserRouter, Route, Routes, Routes} from 'react-router-dom';
+import '../../index.css';
+import {BrowserRouter, Routes, Route} from 'react-router-dom';
 
 // Page imports
-import createPoll from '../pages/create-poll';
-import homePage from '../pages/main';
-import poll from '../pages/poll';
-import profile from '../pages/profile';
-import signIn from '../pages/sign-in';
-import register from '../pages/register';
-import mustBeMember from '../pages/must-be-member';
-import pageNotFound from '../pages/page-not-found';
+import CreatePoll from '../../pages/create-poll/index';
+import Main from '../../pages/main';
+import Poll from '../../pages/poll';
+import Profile from '../../pages/profile';
+import SignIn from '../../pages/sign-in';
+import Register from '../../pages/register';
+import MustBeMember from '../../pages/must-be-member';
+import PageNotFound from '../../pages/page-not-found';
 
-export default RootManager = () => {
+const RoutesManager = () => {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path='/' element={<homePage />} />
-                <Route path='/createPoll' element={<createPoll />} />
-                <Route path='/poll/:pollId' element={<poll />} />
-                <Route path='/profile' element={<profile />} />
-                <Route path='/signIn' element={<signIn />} />
-                <Route path='/register' element={<register />} />
-                <Route path='/mustBeMember' element={<mustBeMember />} />
-                <Route path='/pageNotFound' element={<pageNotFound />} />
+                <Route path='/' element={<Main />} />
+                <Route path='/createPoll' element={<CreatePoll />} />
+                <Route path='/poll/:pollId' element={<Poll />} />
+                <Route path='/profile' element={<Profile />} />
+                <Route path='/signIn' element={<SignIn />} />
+                <Route path='/register' element={<Register />} />
+                <Route path='/mustBeMember' element={<MustBeMember />} />
+                <Route path='/pageNotFound' element={<PageNotFound />} />
             </Routes>
         </BrowserRouter>
     )
 }
 
-
-
-reportWebVitals();
+export default RoutesManager;

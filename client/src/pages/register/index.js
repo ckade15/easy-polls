@@ -1,7 +1,9 @@
 import React from "react";
 
-export default register = (props) => {
+const Register = (props) => {
     return (
-        <section></section>
+        <section>Register</section>
     );
 }
+
+export default Register;
