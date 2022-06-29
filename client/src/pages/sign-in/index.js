@@ -76,6 +76,7 @@ const SignIn = (props) => {
                 </div>
                 <p id="passwordWarning" className="hidden w-fit ml-auto mr-auto mt-1 text-red-600">* Password is required</p>
                 <input type="submit" value="Login" className="bg-red-200 p-2 flex rounded-md w-fit ml-auto mr-auto mt-5 font-bold text-[#AF4D98] border-2 border-[#AF4D98] shadow-md hover:bg-[#9DF7E5] hover:cursor-pointer" onClick={e => handleSubmit(e)} />
+                <p className="mt-3 text-md align-center ml-auto mr-auto w-fit">Need to create an account? <a href="register" className="text-blue-800">Register</a></p>
             </form>
         </section>
       

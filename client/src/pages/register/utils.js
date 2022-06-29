@@ -21,6 +21,18 @@ const validateInput = (state) => {
     if (state.password === ''){
         errors.push('Please enter a password');
     }
+    if (state.firstName === ''){
+        errors.push('Please enter your first name');
+    }
+    if (state.lastName === ''){
+        errors.push('Please enter your last name');
+    }
+    if (state.confirmPassword === ''){
+        errors.push('Please confirm your password');
+    }
+    if (state.confirmEmail === ''){
+        errors.push('Please confirm your email');
+    }
     if (errors.length > 0){
         return errors;
     }
@@ -28,6 +40,8 @@ const validateInput = (state) => {
         return true;
     }
 }
+
+
 
 const utils = {validateInput}
 
