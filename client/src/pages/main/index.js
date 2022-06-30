@@ -1,8 +1,12 @@
 import React from "react";
+import Header from "../../common/header";
 
 const Main = (props) => {
     return (
-        <section className="bg-red-300">Main</section>
+        <section>
+            <Header />
+
+        </section>
     );
 }
 
