@@ -126,6 +126,7 @@ exports.register = async (req, res, next) => {
 // @access Public
 exports.signin = async (req, res, next) => {
     try{
+        console.log(req);
         const email = req.body.email;
         const password = req.body.password;
         const sessionToken = jwt.sign({email: email}, process.env.SECRET, {expiresIn: '24h'});

@@ -33,6 +33,7 @@ const Register = (props) => {
         handleWarnings(e);
     }
 
+    // Handles changing password visibility
     const handlePassword = () => {
         if (state.visibile){
             document.getElementById('password').type = 'password';
@@ -53,6 +54,7 @@ const Register = (props) => {
         }
     }
 
+    // Turns off warnings after user enters data
     const handleWarnings = (e) => {
         switch (e.target.id){
             case 'firstName':
@@ -89,22 +91,22 @@ const Register = (props) => {
             valid.map(error => {
                 switch (error){
                     case 'Please enter your first name':
-                        document.getElementById('firstWarning').className = 'text-red-600 mt-1';
+                        document.getElementById('firstWarning').className = 'text-red-600 mt-1 text-sm';
                         break;
                     case 'Please enter your last name':
-                        document.getElementById('lastWarning').className = 'text-red-600 mt-1';
+                        document.getElementById('lastWarning').className = 'text-red-600 mt-1 text-sm';
                         break;
                     case 'Please enter your email':
-                        document.getElementById('emailWarning').className = 'text-red-600 mt-1';
+                        document.getElementById('emailWarning').className = 'text-red-600 mt-1 text-sm';
                         break;
                     case 'Please confirm your email':
-                        document.getElementById('emailConfirmWarning').className = 'text-red-600 mt-1';
+                        document.getElementById('emailConfirmWarning').className = 'text-red-600 mt-1 text-sm';
                         break;
                     case 'Please enter a password':
-                        document.getElementById('passwordWarning').className = 'text-red-600 mt-1';
+                        document.getElementById('passwordWarning').className = 'text-red-600 mt-1 text-sm';
                         break;
                     case 'Please confirm your password':
-                        document.getElementById('passwordConfirmWarning').className = 'text-red-600 mt-1';
+                        document.getElementById('passwordConfirmWarning').className = 'text-red-600 mt-1 text-sm';
                         break;
                 }
             })
@@ -139,8 +141,8 @@ const Register = (props) => {
                         <img src={visibility} className="w-8 h-8 ml-2 hover:cursor-pointer" onClick={handlePassword} id='visible' />
                     </div>
                     <p id="passwordConfirmWarning" className="hidden">* Please confirm your password</p>
-                    {state.valid[0] === 'Passwords do not match' ? <p className="w-fit text-red-600 ml-auto mr-auto mt-1">* Passwords do not match</p> : <></>}
-                    {state.valid[1] === 'Passwords do not match' ? <p className="w-fit text-red-600 ml-auto mr-auto mt-1">* Passwords do not match</p> : <></>}
+                    {state.valid[0] === 'Passwords do not match' ? <p className="w-fit text-red-600 ml-auto mr-auto mt-1 text-sm">* Passwords do not match</p> : <></>}
+                    {state.valid[1] === 'Passwords do not match' ? <p className="w-fit text-red-600 ml-auto mr-auto mt-1 text-sm">* Passwords do not match</p> : <></>}
 
                 <input type="submit" value="Register" className="bg-red-200 p-2 flex rounded-md w-fit ml-auto mr-auto mt-5 font-bold text-[#AF4D98] border-2 border-[#AF4D98] shadow-md hover:bg-[#9DF7E5] hover:cursor-pointer" onClick={e => handleSubmit(e)}/>
                 <p className="mt-3 text-md">Already have an account? <a href="login" className="text-blue-800">Login</a></p>
