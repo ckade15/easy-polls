@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const controller = require('../controllers/user.controller.js');
+const testMail = require('../config/auth_email')
 
 router
     .route('/register')
@@ -8,6 +9,10 @@ router
         res.send('Register page');
     })
     .post(controller.register);
+
+router
+    .route('/testMail')
+    .get(testMail.testMail)
 
 router
     .route('/signin')

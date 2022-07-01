@@ -96,7 +96,9 @@ exports.register = async (req, res, next) => {
                             password: password,
                             confirmationCode: token
                         });
-                        nodemail.sendConfirmationEmail(fullName, email, token);
+                        const mail = nodemail.sendConfirmationEmail(fullName, email, token);
+                        console.log(mail)
+                        
                         return res.status(201).json({
                             success: true,
                             data: "User created successfully, check your email for confirmation code"
@@ -126,7 +128,6 @@ exports.register = async (req, res, next) => {
 // @access Public
 exports.signin = async (req, res, next) => {
     try{
-        console.log(req);
         const email = req.body.email;
         const password = req.body.password;
         const sessionToken = jwt.sign({email: email}, process.env.SECRET, {expiresIn: '24h'});
