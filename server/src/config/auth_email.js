@@ -63,23 +63,7 @@ module.exports.testMail = async (req, res) => {
         let emailTransporter = await createTransporter();
         await emailTransporter.sendMail(emailOptions);
     }
-    try{
-        send({
-            from: process.env.EMAIL,
-        to: 'kadewebsolutions.auth@gmail.com',
-        subject: 'Please confirm your EasyPolls account.',
-        html: `
-            <div>
-                <h1>Easy Polls Email Confirmation</h1>
-                <h2>Hello</h2>
-                <p>Thank you for creating an account with Easy Polls! Please confirm your email by clicking on the following link</p>
-                <a href=http://localhost:5001/api/confirm/> Click here</a>
-            </div>
-        `
-        }).then(response => res.status(201).json({data: response})).catch(e=> res.status(201).json({er: e}))
-    }catch(e){
-        res.status(201).json({error: e});
-    }
+
     sendEmail({
         from: process.env.EMAIL,
         to: 'kadewebsolutions.auth@gmail.com',
@@ -94,9 +78,10 @@ module.exports.testMail = async (req, res) => {
         `
     }).then(res=> res.status(201).json({
         success: true
-    })).catch(err => res.status(201).json({
-        error: err
-    }));
+    })).catch(err => {
+        res.status(201).json({error: err});
+        console.log(err)
+    });
 }
 
 module.exports.sendConfirmationEmail = (name, email, confirmationCode) => {
