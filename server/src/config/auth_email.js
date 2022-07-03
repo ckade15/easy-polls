@@ -4,33 +4,35 @@ const dotenv = require("dotenv");
 const {google} = require("googleapis");
 const OAuth2 = google.auth.OAuth2;
 
+
 dotenv.config({path: '../../.env'});
 
 
-const user = process.env.EMAIL;
+const USER = process.env.EMAIL;
 const pass = process.env.APP_PASS;
 const CLIENT_ID = process.env.CLIENT_ID;
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
 const REFRESH_TOKEN = process.env.REFRESH_TOKEN;
-const oauth2Client = new OAuth2(
-    CLIENT_ID,
-    CLIENT_SECRET,
-    'https://developers.google.com/oauthplayground'
-);
+const REDIRECT_URI = process.env.REDIRECT_URI;
+const API = 'http://localhost:5001/api/confirm';
+
+const oauth2Client = new OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI);
 
 oauth2Client.setCredentials({refresh_token: REFRESH_TOKEN});
 
+const transporter = nodemailer.createTransport({
+    host: 'smtp.gmail.com',
+    port: 587,
+    auth: {
+        type: 'OAuth2',
+        clientId: CLIENT_ID,
+        clientSecret: CLIENT_SECRET,
+        refreshToken: REFRESH_TOKEN
+    }
+});
+ 
 
-
-const createTransporter = async () => {
-    const oauth2Client = new OAuth2(
-        CLIENT_ID,
-        CLIENT_SECRET,
-        'https://developers.google.com/oauthplayground'
-    )
-    oauth2Client.setCredentials({
-        refresh_token: REFRESH_TOKEN
-    });
+module.exports.testMail = async (req, res) => {
     const accessToken = await new Promise((resolve, reject) => {
         oauth2Client.getAccessToken((err, token) => {
             if (err){
@@ -38,34 +40,10 @@ const createTransporter = async () => {
             }
             resolve(token);
         })
-    })
-    const transporter = nodemailer.createTransport({
-        host: "smtp.gmail.com",
-        port: 465,
-        service: "Gmail",
-        auth: {
-        type: 'OAuth2',
-        user: user,
-        clientId: CLIENT_ID,
-        clientSecret: CLIENT_SECRET,
-        refreshToken: REFRESH_TOKEN,
-        accessToken,
-        expires: 1484314697598
-      },
     });
-    return transporter;
-}
-
-
-
-module.exports.testMail = async (req, res) => {
-    const sendEmail = async (emailOptions) => {
-        let emailTransporter = await createTransporter();
-        await emailTransporter.sendMail(emailOptions);
-    }
-
-    sendEmail({
-        from: process.env.EMAIL,
+    
+    transporter.sendMail({ 
+        from: USER,
         to: 'kadewebsolutions.auth@gmail.com',
         subject: 'Please confirm your EasyPolls account.',
         html: `
@@ -75,26 +53,36 @@ module.exports.testMail = async (req, res) => {
                 <p>Thank you for creating an account with Easy Polls! Please confirm your email by clicking on the following link</p>
                 <a href=http://localhost:5001/api/confirm/> Click here</a>
             </div>
-        `
-    }).then(res=> res.status(201).json({
-        success: true
-    })).catch(err => {
-        res.status(201).json({error: err});
-        console.log(err)
-    });
+        `,
+        auth: {
+            user: USER,
+            accessToken
+        }
+    }).then(response => {
+        return res.status(201).json({success: true, response: response});
+    }).catch(e => {
+        return res.status(201).json({success: false, error: e});
+    })
+    
+    transporter.verify().then(response => console.log('Verified: ' + response)).catch(console.error());
+
 }
 
 module.exports.sendConfirmationEmail = (name, email, confirmationCode) => {
-    transport.sendMail({
-      from: user,
+    transporter.sendMail({
+      from: USER,
       to: email,
       subject: "Please confirm your Easy Polls account",
       html: `
-        <div>
+        <div style="background-color: red">
             <h1>Easy Polls Email Confirmation</h1>
             <h2>Hello ${name}</h2>
             <p>Thank you for creating an account with Easy Polls! Please confirm your email by clicking on the following link</p>
-            <a href=http://localhost:5001/api/confirm/${confirmationCode}> Click here</a>
+            <a href=${API}/${confirmationCode}>Confirm Account</a>
         </div>`,
+        auth: {
+            user: USER,
+            accessToken
+        }
     }).catch(err => console.log(err));
   };

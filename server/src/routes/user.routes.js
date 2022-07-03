@@ -10,6 +10,7 @@ router
     })
     .post(controller.register);
 
+// Added to debug auth issues with gmail
 router
     .route('/testMail')
     .get(testMail.testMail)

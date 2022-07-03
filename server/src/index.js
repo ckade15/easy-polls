@@ -29,17 +29,19 @@ const io = new Server(server, {
     cors: {
         origin: '*',
         methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    }
+    } 
 });
 
 io.on('connection', (socket) => {
     console.log('a user connected');
 
-    socket.on('joinPoll', ({pollId, userId}))
+    socket.on('joinPoll', (pollId, userId) => {
 
-    socket.on('vote', (pollId, index) => {
+    });
 
-    })
+    socket.on('vote', (pollId, index, ipAddr) => {
+
+    });
     
     socket.on('disconnect', () => {
         console.log('user disconnected');
@@ -65,4 +67,4 @@ app.get('/', (req, res) => {
 
 const PORT = process.env.PORT || 5001;
 
-app.listen(PORT, console.log(`\nServer port: ${PORT}`.bold.white));
+app.listen(PORT, console.log(`\nServer listening on port ${PORT}`));

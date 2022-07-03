@@ -9,7 +9,7 @@ const jwt = require('jsonwebtoken');
 exports.createPoll = async (req, res, next) => {
     let errors = []
     const {sessionToken, userId, item, pollLength, createdBy} = req.body;
-
+ 
     try{
         if (sessionToken === undefined || sessionToken === null || sessionToken === ''){
             errors.push('Session token is required');
