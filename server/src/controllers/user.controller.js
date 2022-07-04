@@ -268,40 +268,32 @@ exports.checkToken = async (req, res, next) => {
 exports.updateUser = async (req, res, next) => {
     let errors = [];
     try{
-        const {id,firstName, lastName, email, password, sessionToken} = await req.body;
+        const id = req.params.id;
+        console.log(id)
+        const {firstName, lastName, email, password, sessionToken} = await req.body;
         console.log(firstName, lastName, email, password, sessionToken)
-        const user = User.findOne({sessionToken: sessionToken});
-        const result = User.findByIdAndUpdate(id, {
-            
-        })
-        if (user){
-            if (firstName != undefined){
-                User.findByIdAndUpdate(id, {
-                    firstName: firstName
-                });
-                User.save();
-            }
-            if (lastName != undefined){
-                User.findByIdAndUpdate(id, {
-                    lastName: lastName
-                });
-                User.save();
-            }
-            if (email != undefined){
-                User.findByIdAndUpdate(id, {
-                    email: email
-                });
-                User.save();
-            }
-            if (password != undefined){
-                User.findByIdAndUpdate(id, {
-                    password: password
-                });
-                
-            }
+        const user = User.findOne({_id: id})
+        console.log(user.firstName)
+        let updates = {}
+        if (!user){
+            res.status(201).json({success: false, error: "User not found"});
+            throw new Error('User not found')
         }else{
-            return res.status.json({error: "User not found"});
+            if (firstName !== undefined){
+                updates.push({firstName: firstName});
+            }
+            if (lastName !== undefined){
+                updates.push({lastName: lastName});
+            }
+            if (email !== undefined){
+                updates.push({email: email});
+            }
+            if (password !== undefined) {
+                updates.push({password: password});
+            }
+            const updateUser = await User.findByIdAndUpdate(id, updates)
         }
+        
         return res.status(201).json({success: true})
     }catch(e){
         return res.status(201).json({success: false, error: "Invalid session token"});

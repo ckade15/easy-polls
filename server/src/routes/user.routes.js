@@ -28,7 +28,7 @@ router
     .route('/checkToken')
     .post(controller.checkToken);
 router
-    .route('/updateUser')
-    .post(controller.updateUser)
+    .route('/updateUser/:id')
+    .put(controller.updateUser)
 
 module.exports = router;
