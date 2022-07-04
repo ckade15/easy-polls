@@ -12,7 +12,7 @@ const Profile = (props) => {
     useEffect(()=> {
         alreadyLoggedIn();
         document.title = 'EasyPolls - Profile'
-    });
+    }, [context.loggedIn]);
 
     const alreadyLoggedIn = () => {
         const token = localStorage.getItem('sessionToken');
