@@ -3,6 +3,7 @@ import Footer from "../../common/footer";
 import Header from "../../common/header";
 import UserContext from "../../setup/app-context-manager";
 import { checkToken } from "../../setup/auth";
+import Content from "./components/Content";
 
 const Main = (props) => {
     const [context, setContext] = useContext(UserContext);
@@ -35,7 +36,8 @@ const Main = (props) => {
 
     return (
         <section className="w-full h-min-screen">
-            <Header />
+            <Header page="Home"/>
+            <Content />
             <Footer />
 
         </section>

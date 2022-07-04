@@ -20,7 +20,8 @@ const SignIn = (props) => {
 
     useEffect(() => {
         alreadyLoggedIn();
-        
+        document.title = 'EasyPolls - Login'
+
     }, [state.email, state.password]);
     
     const alreadyLoggedIn = () => {
