@@ -277,24 +277,43 @@ exports.updateUser = async (req, res, next) => {
         let updates = {}
         if (!user){
             res.status(201).json({success: false, error: "User not found"});
-            throw new Error('User not found')
+            
         }else{
-            if (firstName !== undefined){
-                updates.push({firstName: firstName});
+            try{
+                if (firstName !== undefined){
+                    updates.firstName = firstName;
+                }
+
+            }catch{
+
+            }try{
+                if (lastName !== undefined){
+                    updates.lastName = lastName;
+                }
+
+            }catch{
+
+            }try{
+                if (email !== undefined){
+                    updates.email = email;
+                }
+
+            }catch{
+                
             }
-            if (lastName !== undefined){
-                updates.push({lastName: lastName});
+            try{
+                if (password !== undefined) {
+                    updates.password= password;
+                }
+
+            }catch{
+
             }
-            if (email !== undefined){
-                updates.push({email: email});
-            }
-            if (password !== undefined) {
-                updates.push({password: password});
-            }
+
             const updateUser = await User.findByIdAndUpdate(id, updates)
+            updateUser.save()
+            return res.status(201).json({updateUser,updates})
         }
-        
-        return res.status(201).json({success: true})
     }catch(e){
         return res.status(201).json({success: false, error: "Invalid session token"});
     }
