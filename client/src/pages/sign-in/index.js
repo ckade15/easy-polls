@@ -19,26 +19,39 @@ const SignIn = (props) => {
     });
 
     useEffect(() => {
+        alreadyLoggedIn();
+        
+    }, [state.email, state.password]);
+    
+    const alreadyLoggedIn = () => {
         const token = localStorage.getItem('sessionToken');
-        if (token.length > 0){
-            const validToken = checkToken(token).then(token => {
-                setContext({
-                    ...context,
-                    firstName: token.data.firstName,
-                    lastName: token.data.lastName,
-                    email: token.data.email,
-                    sessionToken: token.data.sessionToken,
-                    signedIn: true
-                })
-            });
-        }else{
+        try{
+            if (token.length > 0){
+                const validToken = checkToken(token).then(token => {
+                    setContext({
+                        ...context,
+                        firstName: token.data.firstName,
+                        lastName: token.data.lastName,
+                        email: token.data.email,
+                        sessionToken: token.data.sessionToken,
+                        signedIn: true
+                    })
+                });
+            }else{
+                setState({
+                    ...state,
+                    valid: utils.validateInput(state)
+                });
+            }
+    
+        }catch{
             setState({
                 ...state,
                 valid: utils.validateInput(state)
             });
         }
-
-    }, [state.email, state.password])
+        
+    }
 
     const handleState = e => {
         setState({

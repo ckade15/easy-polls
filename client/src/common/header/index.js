@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import pollPic from '../../assets/polls192.png'
 import UserContext from '../../setup/app-context-manager';
+import logout from './utils';
 
 const Header = (props) => {
 
@@ -31,7 +32,7 @@ const Header = (props) => {
             <div className='w-1/3 flex justify-evenly place-items-center'>
                 <a href="/createPoll" className={btnStyle}>Create Poll</a>
                 <a href="/profile" className={btnStyle}>Profile</a>
-                <a href="/" className={logoutBtn}>Logout</a>
+                <a href="/" className={logoutBtn} onClick={logout}>Logout</a>
             </div>    
         </nav>
     );

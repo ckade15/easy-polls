@@ -14,6 +14,7 @@ export const signIn = async (email, password) => {
     return response;
 }
 
+
 export const register = async (firstName, lastName, email, password) => {
     const response = await axios.post(registerRoute, {
         firstName: firstName,
@@ -24,7 +25,6 @@ export const register = async (firstName, lastName, email, password) => {
     return response;
 }
 
-// 
 export const checkToken = async (sessionToken) => {
     const response = await axios.post(checkRoute, {
         sessionToken: sessionToken
