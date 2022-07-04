@@ -27,5 +27,8 @@ router
 router
     .route('/checkToken')
     .post(controller.checkToken);
+router
+    .route('/updateUser')
+    .post(controller.updateUser)
 
 module.exports = router;

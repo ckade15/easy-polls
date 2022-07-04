@@ -21,7 +21,7 @@ function Input(props) {
         setState({
             ...state,
             value: e.target.value
-        }, document.getElementById(str).value = state);
+        });
     }
 
     const handleCancel = e => {
@@ -41,7 +41,9 @@ function Input(props) {
                         <a className="hover:cursor-pointer" id={`${props.name}Edit`} name={`${props.name}`} onClick={e => handleEditClick(e)}><img src={edit} name='first' className='w-8 h-8 ml-8'/></a>
                      </React.Fragment> : 
                     <React.Fragment>
-                        <input type='text' id={`${props.name}Input`} value={props.val} onChange={e => handleEdit(e)} />
+                        <input type='text' id={`${props.name}Input`} value={state.value} onChange={e => handleEdit(e)} 
+                        className="ml-8 rounded-md p-1 shadow-md "
+                        />
                         <a className="hover:cursor-pointer" onClick={e => handleCancel(e)}><img src={cancel} className='w-8 h-8 ml-8'/></a>
                         <a className="hover:cursor-pointer" onClick={e => handleEditClick(e)}><img src={confirm} name='first' className='w-8 h-8 ml-8'/></a>
                     </React.Fragment>
