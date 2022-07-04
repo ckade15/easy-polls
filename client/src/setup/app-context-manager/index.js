@@ -7,7 +7,8 @@ const initialState = {
     lastName: "",
     email: "",
     sessionToken: "",
-    signedIn: false
+    signedIn: false,
+    id: ""
 }
 
 

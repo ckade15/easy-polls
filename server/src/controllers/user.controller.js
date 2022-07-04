@@ -249,6 +249,7 @@ exports.checkToken = async (req, res, next) => {
                     lastName: user.lastName,
                     email: user.email,
                     sessionToken: user.sessionToken,
+                    id: user.id
                 });
             }
         });
@@ -261,7 +262,7 @@ exports.checkToken = async (req, res, next) => {
     }
 }
 
-// @route Post api/user/update
+// @route Post api/user/updateUser/:userID
 // @desc Update user
 // @params id,sessionToken, email, firstName, lastName, email, password 
 // @access Private

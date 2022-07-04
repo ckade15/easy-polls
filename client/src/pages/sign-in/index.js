@@ -98,7 +98,6 @@ const SignIn = (props) => {
 
         if (state.valid === true){
             // Handle login
-            console.log('hi')
             const response = await auth.signIn(state.email, state.password);
             const err = await response.data.error;
             const success = await response.data.success;

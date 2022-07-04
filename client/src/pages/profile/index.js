@@ -25,7 +25,8 @@ const Profile = (props) => {
                         lastName: token.data.lastName,
                         email: token.data.email,
                         sessionToken: token.data.sessionToken,
-                        signedIn: true
+                        signedIn: true,
+                        id: token.data.id
                     })
                 });
             }else{
