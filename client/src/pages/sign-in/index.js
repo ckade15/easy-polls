@@ -4,6 +4,8 @@ import visibility from '../../assets/visibility.svg';
 import visibilityOff from '../../assets/visibility_off.svg';
 import UserContext from "../../setup/app-context-manager";
 import auth from "../../setup/auth";
+import {Navigate} from 'react-router-dom';
+import { checkToken } from "../../setup/auth";
 
 const SignIn = (props) => {
     const [context, setContext] = useContext(UserContext);
@@ -17,10 +19,25 @@ const SignIn = (props) => {
     });
 
     useEffect(() => {
-        setState({
-            ...state,
-            valid: utils.validateInput(state)
-        });
+        const token = localStorage.getItem('sessionToken');
+        if (token.length > 0){
+            const validToken = checkToken(token).then(token => {
+                setContext({
+                    ...context,
+                    firstName: token.data.firstName,
+                    lastName: token.data.lastName,
+                    email: token.data.email,
+                    sessionToken: token.data.sessionToken,
+                    signedIn: true
+                })
+            });
+        }else{
+            setState({
+                ...state,
+                valid: utils.validateInput(state)
+            });
+        }
+
     }, [state.email, state.password])
 
     const handleState = e => {
@@ -74,7 +91,20 @@ const SignIn = (props) => {
             console.log(response);
             
             if (success){
-                localStorage.setItem('sessionToken', response.data.sessionToken);
+                const fName = response.data.firstName;
+                const lName = response.data.lastName;
+                const email = response.data.email;
+                const sessionToken = response.data.sessionToken;
+                localStorage.setItem('sessionToken', sessionToken);
+                setContext({
+                    ...context,
+                    firstName: fName,
+                    lastName: lName,
+                    sessionToken: sessionToken,
+                    email: email,
+                    signedIn: true
+                });
+
             }
 
             if (err.length > 0){
@@ -113,6 +143,7 @@ const SignIn = (props) => {
                 <input type="submit" value="Login" className="bg-red-200 p-2 flex rounded-md w-fit ml-auto mr-auto mt-5 font-bold text-[#AF4D98] border-2 border-[#AF4D98] shadow-md hover:bg-[#9DF7E5] hover:cursor-pointer" onClick={e => handleSubmit(e)} />
                 <p className="mt-3 text-md align-center ml-auto mr-auto w-fit">Need to create an account? <a href="register" className="text-blue-800">Register</a></p>
             </form>
+            {context.signedIn ? <Navigate to="/" /> : <></>}
         </section>
       
     );

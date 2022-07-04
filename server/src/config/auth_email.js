@@ -14,7 +14,7 @@ const CLIENT_ID = process.env.CLIENT_ID;
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
 const REFRESH_TOKEN = process.env.REFRESH_TOKEN;
 const REDIRECT_URI = process.env.REDIRECT_URI;
-const API = 'http://localhost:5001/api/confirm';
+const API = 'http://localhost:5001/api/user/confirm';
 
 const oauth2Client = new OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI);
 
@@ -68,7 +68,16 @@ module.exports.testMail = async (req, res) => {
 
 }
 
-module.exports.sendConfirmationEmail = (name, email, confirmationCode) => {
+module.exports.sendConfirmationEmail = async (name, email, confirmationCode) => {
+    const accessToken = await new Promise((resolve, reject) => {
+        oauth2Client.getAccessToken((err, token) => {
+            if (err){
+                reject('Failed to create access token')
+            }
+            resolve(token);
+        })
+    });
+
     transporter.sendMail({
       from: USER,
       to: email,
@@ -84,5 +93,11 @@ module.exports.sendConfirmationEmail = (name, email, confirmationCode) => {
             user: USER,
             accessToken
         }
-    }).catch(err => console.log(err));
+    }).then(response => {
+        console.log(response);
+        return response.status(201).json({success: true, response: response})
+    }).catch(err => {
+        console.log(err);
+        return response.status(201).json({success: false, errors: err})
+    });
   };

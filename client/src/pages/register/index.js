@@ -1,10 +1,16 @@
-import { useState, React, useEffect } from "react";
+import { useState, React, useEffect, useContext } from "react";
+
 import utils from "./utils";
 import visibility from "../../assets/visibility.svg";
 import visibilityOff from "../../assets/visibility_off.svg";
 import auth from "../../setup/auth";
+import {checkToken} from "../../setup/auth";
+import UserContext from "../../setup/app-context-manager";
+import { Navigate } from "react-router-dom";
 
 const Register = (props) => {
+    const [context, setContext] = useContext(UserContext);
+
     const [state, setState] = useState({
         firstName: "",
         lastName: "",
@@ -20,12 +26,30 @@ const Register = (props) => {
     });
 
     useEffect(() => {
-        
-        setState({
-            ...state,
-            valid: utils.validateInput(state)
-        })
-    }, [state.email, state.confirmEmail, state.password, state.confirmPassword])
+        alreadyLoggedIn();
+
+    }, [state.email, state.confirmEmail, state.password, state.confirmPassword]);
+
+    const alreadyLoggedIn = () => {
+        const token = localStorage.getItem('sessionToken');
+        if (token.length > 0){
+            checkToken(token).then(token => {
+                setContext({
+                    ...context,
+                    firstName: token.data.firstName,
+                    lastName: token.data.lastName,
+                    email: token.data.email,
+                    sessionToken: token.data.sessionToken,
+                    signedIn: true
+                })
+            });
+        }else{
+            setState({
+                ...state,
+                valid: utils.validateInput(state)
+            });
+        }
+    }
 
     const handleState = e => {
         setState({
@@ -90,7 +114,7 @@ const Register = (props) => {
         const valid = utils.validateInput(state);
         if (valid === true){
             // Register Account
-            const response = auth.register(state.firstName, state.lastName, state.email, state.password).then(response=>{
+            auth.register(state.firstName, state.lastName, state.email, state.password).then(response=>{
                 if (response.data.success){
                     setState({
                         ...state,
@@ -151,23 +175,24 @@ const Register = (props) => {
                         <p id="emailWarning" className="hidden">* Please enter your email</p>
                         <p className="text-[#AF4D98] font-bold mt-2">Confirm Email</p>
                         <input id="confirmEmail" name="confirmEmail" type="email" className="rounded-md p-1 shadow-md" onChange={e => handleState(e)}/>
-                        {state.valid[0] === 'Emails do not match' ? <p className="w-fit text-red-600 ml-auto mr-auto mt-1 text-sm">* Emails do not match</p> : <></>}
+                        {state.valid[0] === 'Emails do not match' ? <p className="w-fit text-red-600 mt-1 text-sm">* Emails do not match</p> : <></>}
                         <p id="emailConfirmWarning" className="hidden">* Please confirm your email</p>
                         <p className="text-[#AF4D98] font-bold mt-2">Password</p>
                         <input id="password" name="password" type="password" className="rounded-md p-1 shadow-md " onChange={e => handleState(e)} />
                         <p id="passwordWarning" className="hidden">* Please enter a password</p>
                         <p className="text-[#AF4D98] font-bold mt-2">Confirm Password</p>
-                        <div className="m-0 p-0 flex ml-auto mr-auto place-items-center justify-center ">
+                        <div className="m-0 p-0 flex ml-auto mr-auto ">
                             <input id="confirmPassword" name="confirmPassword" type="password" className="flex h-fit rounded-md p-1 shadow-md " onChange={e => handleState(e)} />
                             <img src={visibility} className="w-8 h-8 ml-2 hover:cursor-pointer" onClick={handlePassword} id='visible' />
                         </div>
                         <p id="passwordConfirmWarning" className="hidden">* Please confirm your password</p>
                         {state.errors.length > 0 && <div className="mt-1 text-red-600 text-center">{state.errors.map(error => <p className="mt-2">{ "* " + error}</p>)}</div>}
-                        {state.valid[0] === 'Passwords do not match' ? <p className="w-fit text-red-600 ml-auto mr-auto mt-1 text-sm">* Passwords do not match</p> : <></>}
-                        {state.valid[1] === 'Passwords do not match' ? <p className="w-fit text-red-600 ml-auto mr-auto mt-1 text-sm">* Passwords do not match</p> : <></>}
+                        {state.valid[0] === 'Passwords do not match' ? <p className="w-fit text-red-600 mt-1 text-sm">* Passwords do not match</p> : <></>}
+                        {state.valid[1] === 'Passwords do not match' ? <p className="w-fit text-red-600  mt-1 text-sm">* Passwords do not match</p> : <></>}
     
                     <input type="submit" value="Register" className="bg-red-200 p-2 flex rounded-md w-fit ml-auto mr-auto mt-5 font-bold text-[#AF4D98] border-2 border-[#AF4D98] shadow-md hover:bg-[#9DF7E5] hover:cursor-pointer" onClick={e => handleSubmit(e)}/>
                     <p className="mt-3 text-md">Already have an account? <a href="login" className="text-blue-800">Login</a></p>
+                    {context.signedIn ? <Navigate to="/" /> : <></>}
                 </form>
             </section>
         );

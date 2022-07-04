@@ -24,6 +24,7 @@ export const register = async (firstName, lastName, email, password) => {
     return response;
 }
 
+// 
 export const checkToken = async (sessionToken) => {
     const response = await axios.post(checkRoute, {
         sessionToken: sessionToken
