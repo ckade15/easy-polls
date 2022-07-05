@@ -36,11 +36,12 @@ function Input(props) {
     const handleConfirm = async e => {
         e.preventDefault();
 
-        const response = await utils.confirm(props.id, props.name, state.value).then(response => console.log(response)).catch(err => console.error);
+        const response = await utils.confirm(props.id, props.name, state.value).then(response => props.setContext(response.data.updateUser)).catch(err => console.error);
         setState({
             ...state,
             edit: false
-        })
+        });
+        
         
     }
 
@@ -51,7 +52,7 @@ function Input(props) {
             load: false,
             value: props.val
         })
-    }, [state.load])
+    }, [setState])
 
     return (
         <React.Fragment>
@@ -59,7 +60,7 @@ function Input(props) {
                 <p className='text-lg'>{props.title}</p>
                 {!state.edit ? 
                      <React.Fragment>
-                        <p id={props.name} className='ml-8 text-lg'>{props.val}</p>
+                        <p id={props.name} className='ml-8 text-lg'>{state.value}</p>
                         <a className="hover:cursor-pointer" id={`${props.name}Edit`} name={`${props.name}`} onClick={e => handleEditClick(e)}><img src={edit} name='first' className='w-8 h-8 ml-8'/></a>
                      </React.Fragment> : 
                     <React.Fragment>

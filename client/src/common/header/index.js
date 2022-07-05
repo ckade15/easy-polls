@@ -11,7 +11,7 @@ const Header = (props) => {
 
     useEffect(()=> {
         
-    })
+    }, [context.value])
     const dtAnon = (
         <nav className='p-4 bg-[#9DF7E5] flex justify-between'>
             <div className='w-1/3 flex'>
