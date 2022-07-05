@@ -52,7 +52,7 @@ function Input(props) {
             load: false,
             value: props.val
         })
-    }, [setState])
+    }, [])
 
     return (
         <React.Fragment>
@@ -60,7 +60,10 @@ function Input(props) {
                 <p className='text-lg'>{props.title}</p>
                 {!state.edit ? 
                      <React.Fragment>
-                        <p id={props.name} className='ml-8 text-lg'>{state.value}</p>
+                        {state.value.length === 0 ? 
+                        <p id={props.name} className='ml-8 text-lg'>{props.val}</p> :
+                        <p id={props.name} className='ml-8 text-lg'>{state.value}</p>}
+                        
                         <a className="hover:cursor-pointer" id={`${props.name}Edit`} name={`${props.name}`} onClick={e => handleEditClick(e)}><img src={edit} name='first' className='w-8 h-8 ml-8'/></a>
                      </React.Fragment> : 
                     <React.Fragment>
