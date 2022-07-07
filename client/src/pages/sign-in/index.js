@@ -22,7 +22,7 @@ const SignIn = (props) => {
         alreadyLoggedIn();
         document.title = 'EasyPolls - Login'
 
-    }, [state.email, state.password]);
+    }, [state.email, state.password, checkToken]);
     
     const alreadyLoggedIn = () => {
         const token = localStorage.getItem('sessionToken');

@@ -28,7 +28,7 @@ const Register = (props) => {
     useEffect(() => {
         alreadyLoggedIn();
         document.title = 'EasyPolls - Register'
-    }, [state.email, state.confirmEmail, state.password, state.confirmPassword]);
+    }, [state.email, state.confirmEmail, state.password, state.confirmPassword, checkToken]);
 
     const alreadyLoggedIn = () => {
         const token = localStorage.getItem('sessionToken');
