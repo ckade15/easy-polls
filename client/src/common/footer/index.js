@@ -5,7 +5,7 @@ import github from '../../assets/github.png'
 
 const Footer = (props) => {
   return (
-    <footer className={`bottom-0 ${props.dis} w-full  bg-[#9DF7E5] p-4 flex justify-evenly text-xl mt-20 absolute`}>
+    <footer className={`bottom-0 ${props.dis} w-full  bg-[#9DF7E5] p-4 flex justify-evenly text-xl relative`}>
         <div className="flex flex-col w-1/2 text-xl text-center">
             <p className="text-xl text-black font-bold font-mono p-1 mt-2">&copy; EasyPolls  {(new Date().getFullYear())}</p>
             <p className="font-mono text-lg font-bold text-gray-600  mb-1">Made by Chris Kade</p>

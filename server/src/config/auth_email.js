@@ -7,9 +7,8 @@ const OAuth2 = google.auth.OAuth2;
 
 dotenv.config({path: '../../.env'});
 
-
+// Email client info
 const USER = process.env.EMAIL;
-const pass = process.env.APP_PASS;
 const CLIENT_ID = process.env.CLIENT_ID;
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
 const REFRESH_TOKEN = process.env.REFRESH_TOKEN;

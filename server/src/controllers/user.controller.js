@@ -152,6 +152,7 @@ exports.signin = async (req, res, next) => {
             }
             return true;
         };
+        
         if (valid()) {
             
             User.findOne({email: email}, (err, user) => {
