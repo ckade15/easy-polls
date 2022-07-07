@@ -12,11 +12,15 @@ function Input(props) {
     });
 
     const handleEditClick = e => {
-        setState({
+        {state.value === '' ? setState({
             ...state,
             edit: true,
             value: props.val
-        })
+        }) : setState({
+            ...state,
+            edit: true,
+            value: state.value
+        })}
     }
 
     const handleEdit = e => {
@@ -36,7 +40,18 @@ function Input(props) {
     const handleConfirm = async e => {
         e.preventDefault();
 
-        const response = await utils.confirm(props.id, props.name, state.value).then(response => props.setContext(response.data.updateUser)).catch(err => console.error);
+        const response = await utils.confirm(props.id, props.name, state.value).then(response => props.setContext({
+            _id: response.data.updateUser._id,
+            firstName: response.data.updateUser.firstName,
+            lastName: response.data.updateUser.lastName,
+            email: response.data.updateUser.email,
+            sessionToken: response.data.updateUser.sessionToken,
+            signedIn: true
+        })).catch(err => console.error);
+        props.setContext({
+            ...props.context,
+            [props.name]: state.value
+        })
         setState({
             ...state,
             edit: false
@@ -45,14 +60,6 @@ function Input(props) {
         
     }
 
-    useEffect(()=> {
-        
-        setState({
-            ...state,
-            load: false,
-            value: props.val
-        })
-    }, [])
 
     return (
         <React.Fragment>

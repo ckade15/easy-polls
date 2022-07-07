@@ -8,7 +8,7 @@ const initialState = {
     email: "",
     sessionToken: "",
     signedIn: false,
-    id: ""
+    _id: ""
 }
 
 

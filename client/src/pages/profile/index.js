@@ -26,7 +26,7 @@ const Profile = (props) => {
                         email: token.data.email,
                         sessionToken: token.data.sessionToken,
                         signedIn: true,
-                        id: token.data.id
+                        _id: token.data.id
                     })
                 });
             }else{
