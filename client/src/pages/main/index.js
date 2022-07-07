@@ -10,7 +10,7 @@ const Main = (props) => {
     
     useEffect(() => {
         alreadyLoggedIn()
-    })
+    }, [])
 
     const alreadyLoggedIn = () => {
         const token = localStorage.getItem('sessionToken');

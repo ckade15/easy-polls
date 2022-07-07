@@ -29,12 +29,10 @@ const UpdatePassword = (props) => {
         }
     }
     const handleChange = e => {
-        e.preventDefault();
         setState({
-            ...state,
-            [e.target.name]: e.target.value
+            [e.target.id]: e.target.value
         });
-        validate()
+        
     }
 
     if (state.updating){
