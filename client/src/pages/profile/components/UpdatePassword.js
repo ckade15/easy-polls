@@ -1,12 +1,16 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 const UpdatePassword = (props) => {
     const [state, setState] = useState({
-        password: "",
-        confirmPassword: "",
         updating: false,
         error: false
     });
+    
+    // password state handled separately to optimize
+    const [password, setPassword] = useState({
+        password: "",
+        confirmPassword: ""
+    })
 
     const handleUpdate = () => {
         setState({
@@ -16,8 +20,8 @@ const UpdatePassword = (props) => {
     }
 
     const validate = () => {
-        if (state.password > 0 && state.confirmPassword > 0){
-            if (state.password !== state.confirmPassword){
+        if (password.password > 0 && password.confirmPassword > 0){
+            if (password.password !== password.confirmPassword){
                 setState({
                     ...state,
                     error: true
@@ -25,14 +29,19 @@ const UpdatePassword = (props) => {
             }else{
                 setState({
                     ...state,
-                    error: false
+                    error: true
                 });
             }
         }
     }
+
+    useEffect(() => {
+        validate();
+    }, [password.password, password.confirmPassword])
+
     const handleInput = (e) => {
-        setState({
-            ...state,
+        setPassword({
+            ...password,
             [e.target.name]: e.target.value
         });
         setTimeout(validate, 300);
@@ -47,7 +56,7 @@ const UpdatePassword = (props) => {
                 </div>
                 <div className='w-full justify-center flex mt-10'>
                     <p className='w-1/4'>Confirm Password:</p>
-                    <input type='text' id='confirmPassword' name='confirmPassword' className="ml-8 rounded-md p-1 shadow-md " onChange={e=> {setState({...state, [e.target.name]: e.target.value}); validate()}} />
+                    <input type='text' id='confirmPassword' name='confirmPassword' className="ml-8 rounded-md p-1 shadow-md " onChange={e=> {handleInput(e)}} />
                 </div>
                 {state.error ? <p className='text-red-600 text-sm text-center mt-4'>* Passwords must match</p> : <></>}
                 <div className='flex w-1/2 ml-auto mr-auto'>
