@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import utils from '../../register/utils';
+import axios from 'axios';
 
 const UpdatePassword = (props) => {
+    const path = 'http://localhost:5001/api/user/updatePassword/'+ props.id;
+
     const [state, setState] = useState({
         updating: false,
         error: false
@@ -40,27 +43,20 @@ const UpdatePassword = (props) => {
             [e.target.name]: e.target.value
         });
     }
-    /*
-    const path = 'http://localhost:5001/api/user/'+ props.id;
-    const reqOptions = {
-        method: "PUT",
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({password: password.password})
-    }*/
+    
+
     const handleSubmit = async (e) => {
         
         if (state.error){
         }else{
             e.preventDefault();
-            
-            const response = await utils.updatePassword(props.id, password.password).then(response => props.setContext({
-                _id: response.data.updateUser._id,
-                firstName: response.data.updateUser.firstName,
-                lastName: response.data.updateUser.lastName,
-                email: response.data.updateUser.email,
-                sessionToken: response.data.updateUser.sessionToken,
-                signedIn: true
-            })).catch(err => console.error);
+            const request = await axios.put(path, {
+                sessionToken: props.sessionToken,
+                password: password.password
+            }).then(response => {
+                setState({...state, updating: false})
+            }).catch(err => console.log(err));
+
             
             setState({
                 ...state,
