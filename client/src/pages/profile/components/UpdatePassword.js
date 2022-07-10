@@ -21,6 +21,7 @@ const UpdatePassword = (props) => {
     }
 
     const validate = () => {
+        console.log(password.password, password.confirmPassword)
         if (password.password.length > 0 && password.confirmPassword.length > 0){
             if (password.password !== password.confirmPassword){
                 setState({...state, error: true});
@@ -50,11 +51,11 @@ const UpdatePassword = (props) => {
             <div className='w-full flex-col justify-center place-items-center'>
                 <div className='w-full justify-center flex mt-10'>
                     <p className='w-1/4'>Password:</p>
-                    <input type='text' id='password' name='password' className="ml-8 rounded-md p-1 shadow-md " onChange={e => handleInput(e)}/>
+                    <input type='text' id='password' name='password' className="ml-8 rounded-md p-1 shadow-md h-fit " onChange={e => handleInput(e)}/>
                 </div>
                 <div className='w-full justify-center flex mt-10'>
                     <p className='w-1/4'>Confirm Password:</p>
-                    <input type='text' id='confirmPassword' name='confirmPassword' className="ml-8 rounded-md p-1 shadow-md " onChange={e=> {handleInput(e)}} />
+                    <input type='text' id='confirmPassword' name='confirmPassword' className="ml-8 rounded-md p-1 shadow-md h-fit" onChange={e=> {handleInput(e)}} />
                 </div>
                 {state.error ? <p className='text-red-600 text-sm text-center mt-4' id='passwordWarning'>* Passwords must match</p> : <></>}
                 <div className='flex w-1/2 ml-auto mr-auto'>
