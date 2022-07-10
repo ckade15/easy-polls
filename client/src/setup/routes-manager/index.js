@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import '../../index.css';
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
 
@@ -15,6 +15,7 @@ import RegisterSuccess from '../../pages/register-success';
 
 // Context import
 import {UserProvider} from '../app-context-manager/index';
+
 
 const RoutesManager = () => {
     return (

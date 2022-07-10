@@ -19,7 +19,7 @@ const UpdatePassword = (props) => {
     // Handles view change from button to inputs and vice versa
     const handleUpdate = () => {
         setState({
-            ...state, 
+            error: false,
             updating: !state.updating
         });
     }
@@ -42,6 +42,7 @@ const UpdatePassword = (props) => {
             ...password,
             [e.target.name]: e.target.value
         });
+        document.getElementById('pWarning').className = "text-red-600 text-sm text-center mt-4 hidden";
     }
     
 
@@ -49,19 +50,23 @@ const UpdatePassword = (props) => {
         
         if (state.error){
         }else{
-            e.preventDefault();
-            const request = await axios.put(path, {
-                sessionToken: props.sessionToken,
-                password: password.password
-            }).then(response => {
-                setState({...state, updating: false})
-            }).catch(err => console.log(err));
-
-            
-            setState({
-                ...state,
-                updating: false
-            }); 
+            if (password.password === '' || password.confirmPassword === ''){
+                document.getElementById('pWarning').className = "text-red-600 text-sm text-center mt-4";
+            }else{
+                e.preventDefault();
+                const request = await axios.put(path, {
+                    sessionToken: props.sessionToken,
+                    password: password.password
+                }).then(response => {
+                    setState({...state, updating: false})
+                }).catch(err => console.log(err));
+    
+                
+                setState({
+                    ...state,
+                    updating: false
+                }); 
+            }
         }
     }
 
@@ -79,7 +84,8 @@ const UpdatePassword = (props) => {
                 <div className='w-full justify-center flex mt-10'>
                     <p className='w-1/4'>Confirm Password:</p>
                     <input type='text' id='confirmPassword' name='confirmPassword' className="ml-8 rounded-md p-1 shadow-md h-fit" onChange={e=> {handleInput(e)}} />
-                </div>
+                </div> 
+                <p id='pWarning' className='text-red-600 text-sm text-center mt-4 hidden'>* Password cannot be blank</p>
                 {state.error ? <p className='text-red-600 text-sm text-center mt-4' id='passwordWarning'>* Passwords must match</p> : <></>}
                 <div className='flex w-1/2 ml-auto mr-auto'>
                     <a className="hover:pointer-click bg-red-500 p-3 opacity-90 flex rounded-md w-fit ml-auto mr-auto mt-12 font-bold text-white  border-2 border-[#AF4D98] shadow-md hover:bg-[#353a357e] hover:text-[#9DF7E5] hover:cursor-pointer" onClick={handleUpdate}>Cancel</a>
@@ -88,6 +94,7 @@ const UpdatePassword = (props) => {
             </div>
         )
     }else{
+        
         return (
             <a className="hover:pointer-click bg-red-200 p-3 flex rounded-md w-fit ml-auto mr-auto mt-12 font-bold text-[#AF4D98] border-2 border-[#AF4D98] shadow-md hover:bg-[#9DF7E5] hover:cursor-pointer" onClick={handleUpdate} >Update Password</a>
         )

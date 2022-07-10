@@ -7,10 +7,11 @@ import { checkToken } from "../../setup/auth";
 
 const CreatePoll = (props) => {
     const [context, setContext] = useContext(UserContext);
-    useEffect(() => {
-        document.title = 'EasyPolls - Create a Poll';
+
+    useEffect(()=> {
         alreadyLoggedIn();
-    });
+        document.title = 'EasyPolls - Create a Poll'
+    }, [context.loggedIn]);
 
     const alreadyLoggedIn = () => {
         const token = localStorage.getItem('sessionToken');
@@ -28,7 +29,7 @@ const CreatePoll = (props) => {
                     })
                 });
             }else{
-                
+                return <Navigate to="/login" />
             }
     
         }catch{
@@ -38,7 +39,6 @@ const CreatePoll = (props) => {
 
     return (
         <React.Fragment>
-            {context.signedIn ? <></> : <Navigate to='/login'/>}
             <Header page="Create Poll" />
             <Footer />
         </React.Fragment>
