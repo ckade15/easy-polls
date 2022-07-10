@@ -18,7 +18,7 @@ function Content(props) {
                 <Input name='firstName' title='First Name:' val={context.firstName} id={context.id} context={context} setContext={setContext}/>
                 <Input name='lastName' title='Last Name:' val={context.lastName} id={context.id} context={context} setContext={setContext}/>
                 <Input name='email' title='Email:' val={context.email} id={context._id} context={context} setContext={setContext}/>
-                <UpdatePassword context={context} setContext={setContext} />
+                <UpdatePassword context={context} setContext={setContext} id={context._id} />
             </section>
         </main>
     )

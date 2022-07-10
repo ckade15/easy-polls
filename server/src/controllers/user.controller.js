@@ -271,12 +271,12 @@ exports.updateUser = async (req, res, next) => {
     let errors = [];
     try{
         const id = req.params.id;
-        console.log(id)
         const {firstName, lastName, email, password, sessionToken} = await req.body;
-        console.log(firstName, lastName, email, password, sessionToken)
-        const user = User.findOne({_id: id})
-        console.log(user.firstName)
+        const user = User.findOne({_id: id});
+
+        // Creates user object to send updates
         let updates = {}
+        
         if (!user){
             res.status(201).json({success: false, error: "User not found"});
             

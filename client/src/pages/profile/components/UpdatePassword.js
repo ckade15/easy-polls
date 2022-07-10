@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
+import utils from '../../register/utils';
 
 const UpdatePassword = (props) => {
     const [state, setState] = useState({
@@ -41,9 +42,23 @@ const UpdatePassword = (props) => {
         });
     }
 
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        if (state.error){
+
+        }else{
+            const response = await utils.confirm(props.id, 'password', password.password).then(()=> {
+                setState({
+                    ...state,
+                    updating: false
+                })
+            }).catch(e => console.log(e));
+        }
+    }
+
     useEffect(() => {
         validate();
-    }, [state.error, validate])
+    }, [state.error, password.password, password.confirmPassword])
 
     if (state.updating){
         return (
