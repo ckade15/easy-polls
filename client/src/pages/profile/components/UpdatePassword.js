@@ -20,28 +20,14 @@ const UpdatePassword = (props) => {
         });
     }
 
-    const validate = (p, p2, setState) => {
-        if (p.length > 0 && p2.length > 0){
-            if (p === p2){
-                setState({
-                    ...state,
-                    error: false
-                })
-            }else{
-                setState({
-                    ...state,
-                    error: true
-                })
-            }
-        }
-        if (password.password > 0 && password.confirmPassword > 0){
+    const validate = () => {
+        if (password.password.length > 0 && password.confirmPassword.length > 0){
             if (password.password !== password.confirmPassword){
                 setState({...state, error: true});
-                document.getElementById('passwordWarning').className = "text-red-600 text-sm text-center mt-4"
                
             }else{
                 setState({...state, error: false});
-                document.getElementById('passwordWarning').className = 'text-red-600 text-sm text-center mt-4 hidden'
+                
             }
         }
     }
@@ -51,8 +37,8 @@ const UpdatePassword = (props) => {
         setPassword({
             ...password,
             [e.target.name]: e.target.value
-        });
-        validate();
+        }, validate());
+        
     }
 
     if (state.updating){
@@ -66,7 +52,7 @@ const UpdatePassword = (props) => {
                     <p className='w-1/4'>Confirm Password:</p>
                     <input type='text' id='confirmPassword' name='confirmPassword' className="ml-8 rounded-md p-1 shadow-md " onChange={e=> {handleInput(e)}} />
                 </div>
-                {state.error ? <p className='text-red-600 text-sm text-center mt-4 hidden' id='passwordWarning'>* Passwords must match</p> : <></>}
+                {state.error ? <p className='text-red-600 text-sm text-center mt-4' id='passwordWarning'>* Passwords must match</p> : <></>}
                 <div className='flex w-1/2 ml-auto mr-auto'>
                     <a href='#' className="bg-red-500 p-3 opacity-90 flex rounded-md w-fit ml-auto mr-auto mt-12 font-bold text-white  border-2 border-[#AF4D98] shadow-md hover:bg-[#353a357e] hover:text-[#9DF7E5] hover:cursor-pointer" onClick={handleUpdate}>Cancel</a>
                     <a href='#' className="bg-red-200 p-3 flex rounded-md w-fit ml-auto mr-auto mt-12 font-bold text-[#AF4D98] border-2 border-[#AF4D98] shadow-md hover:bg-[#9DF7E5] hover:cursor-pointer" >Confirm</a>
