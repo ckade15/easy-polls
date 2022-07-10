@@ -30,5 +30,9 @@ router
 router
     .route('/updateUser/:id')
     .put(controller.updateUser)
+router
+    .route('/updatePassword/:id')
+    .put(controller.updatePassword)
+
 
 module.exports = router;

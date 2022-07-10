@@ -17,8 +17,8 @@ function Content(props) {
                 <h3 className='font-bold text-4xl text-center'>Profile Information</h3>
                 <Input name='firstName' title='First Name:' val={context.firstName} id={context.id} context={context} setContext={setContext}/>
                 <Input name='lastName' title='Last Name:' val={context.lastName} id={context.id} context={context} setContext={setContext}/>
-                <Input name='email' title='Email:' val={context.email} id={context._id} context={context} setContext={setContext}/>
-                <UpdatePassword context={context} setContext={setContext} id={context._id} />
+                <Input name='email' title='Email:' val={context.email} id={context.id} context={context} setContext={setContext}/>
+                <UpdatePassword context={context} setContext={setContext} id={context.id} />
             </section>
         </main>
     )

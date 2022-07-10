@@ -22,7 +22,6 @@ const UpdatePassword = (props) => {
     }
 
     const validate = () => {
-        console.log(password.password, password.confirmPassword)
         if (password.password.length > 0 && password.confirmPassword.length > 0){
             if (password.password !== password.confirmPassword){
                 setState({...state, error: true});
@@ -41,18 +40,32 @@ const UpdatePassword = (props) => {
             [e.target.name]: e.target.value
         });
     }
-
+    /*
+    const path = 'http://localhost:5001/api/user/'+ props.id;
+    const reqOptions = {
+        method: "PUT",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({password: password.password})
+    }*/
     const handleSubmit = async (e) => {
-        e.preventDefault();
+        
         if (state.error){
-
         }else{
-            const response = await utils.confirm(props.id, 'password', password.password).then(()=> {
-                setState({
-                    ...state,
-                    updating: false
-                })
-            }).catch(e => console.log(e));
+            e.preventDefault();
+            
+            const response = await utils.updatePassword(props.id, password.password).then(response => props.setContext({
+                _id: response.data.updateUser._id,
+                firstName: response.data.updateUser.firstName,
+                lastName: response.data.updateUser.lastName,
+                email: response.data.updateUser.email,
+                sessionToken: response.data.updateUser.sessionToken,
+                signedIn: true
+            })).catch(err => console.error);
+            
+            setState({
+                ...state,
+                updating: false
+            }); 
         }
     }
 
@@ -73,14 +86,14 @@ const UpdatePassword = (props) => {
                 </div>
                 {state.error ? <p className='text-red-600 text-sm text-center mt-4' id='passwordWarning'>* Passwords must match</p> : <></>}
                 <div className='flex w-1/2 ml-auto mr-auto'>
-                    <a href='#' className="bg-red-500 p-3 opacity-90 flex rounded-md w-fit ml-auto mr-auto mt-12 font-bold text-white  border-2 border-[#AF4D98] shadow-md hover:bg-[#353a357e] hover:text-[#9DF7E5] hover:cursor-pointer" onClick={handleUpdate}>Cancel</a>
-                    <a href='#' className="bg-red-200 p-3 flex rounded-md w-fit ml-auto mr-auto mt-12 font-bold text-[#AF4D98] border-2 border-[#AF4D98] shadow-md hover:bg-[#9DF7E5] hover:cursor-pointer" >Confirm</a>
+                    <a className="hover:pointer-click bg-red-500 p-3 opacity-90 flex rounded-md w-fit ml-auto mr-auto mt-12 font-bold text-white  border-2 border-[#AF4D98] shadow-md hover:bg-[#353a357e] hover:text-[#9DF7E5] hover:cursor-pointer" onClick={handleUpdate}>Cancel</a>
+                    <a className="hover:pointer-click bg-red-200 p-3 flex rounded-md w-fit ml-auto mr-auto mt-12 font-bold text-[#AF4D98] border-2 border-[#AF4D98] shadow-md hover:bg-[#9DF7E5] hover:cursor-pointer" onClick={e => handleSubmit(e)}>Confirm</a>
                 </div>
             </div>
         )
     }else{
         return (
-            <a href='#' className="bg-red-200 p-3 flex rounded-md w-fit ml-auto mr-auto mt-12 font-bold text-[#AF4D98] border-2 border-[#AF4D98] shadow-md hover:bg-[#9DF7E5] hover:cursor-pointer" onClick={handleUpdate} >Update Password</a>
+            <a className="hover:pointer-click bg-red-200 p-3 flex rounded-md w-fit ml-auto mr-auto mt-12 font-bold text-[#AF4D98] border-2 border-[#AF4D98] shadow-md hover:bg-[#9DF7E5] hover:cursor-pointer" onClick={handleUpdate} >Update Password</a>
         )
 
     }

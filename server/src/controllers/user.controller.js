@@ -272,11 +272,11 @@ exports.updateUser = async (req, res, next) => {
     try{
         const id = req.params.id;
         const {firstName, lastName, email, password, sessionToken} = await req.body;
-        const user = User.findOne({_id: id});
+        const user = User.findOne({_id: id, sessionToken: sessionToken});
 
         // Creates user object to send updates
         let updates = {}
-        
+
         if (!user){
             res.status(201).json({success: false, error: "User not found"});
             
@@ -314,7 +314,39 @@ exports.updateUser = async (req, res, next) => {
 
             const updateUser = await User.findByIdAndUpdate(id, updates)
             updateUser.save()
-            return res.status(201).json({updateUser,updates})
+            return res.status(201).json({success: true, updateUser,updates})
+        }
+    }catch(e){
+        return res.status(201).json({success: false, error: "Invalid session token"});
+    }
+}
+// @route Post api/user/updatePassword/:userID
+// @desc Update user
+// @params id,sessionToken, password 
+// @access Private
+exports.updatePassword = async (req, res, next) => {
+    let errors = [];
+    try{
+        const id = req.params.id;
+        const { password, sessionToken} = await req.body;
+        const user = User.findOne({_id: id, sessionToken: sessionToken});
+
+        // Creates user object to send updates
+        const pwHash = bcrypt.hashSync(password, 10, function(err, hash){
+            return hash;
+        });
+        let updates = {
+            password: pwHash
+        }
+
+        if (!user){
+            res.status(201).json({success: false, error: "User not found"});
+            
+        }else{
+
+            const updateUser = await User.findByIdAndUpdate(id, updates)
+            updateUser.save()
+            return res.status(201).json({success: true, updateUser})
         }
     }catch(e){
         return res.status(201).json({success: false, error: "Invalid session token"});
