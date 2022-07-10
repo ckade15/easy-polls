@@ -37,9 +37,13 @@ const UpdatePassword = (props) => {
         setPassword({
             ...password,
             [e.target.name]: e.target.value
-        }, validate());
-        
+        });
+        validate();
     }
+
+    useEffect(() => {
+
+    }, [state.error])
 
     if (state.updating){
         return (
