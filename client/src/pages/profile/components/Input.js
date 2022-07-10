@@ -76,7 +76,7 @@ function Input(props) {
                     <React.Fragment>
                         {state.load ? <></> : <></>}
                         <input type='text' id={`${props.name}Input`} value={state.value} onChange={e => handleEdit(e)} 
-                        className="ml-8 rounded-md p-1 shadow-md "
+                        className="ml-8 rounded-md p-1 shadow-md min-w-[300px]"
                         />
                         <a className="hover:cursor-pointer" onClick={e => handleCancel(e)}><img src={cancel} className='w-8 h-8 ml-8'/></a>
                         <a className="hover:cursor-pointer" onClick={e => handleConfirm(e)}><img src={confirm} name='first' className='w-8 h-8 ml-8'/></a>

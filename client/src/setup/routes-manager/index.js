@@ -26,7 +26,6 @@ const RoutesManager = () => {
                     <Route path='/' element={<Main />} />
                     <Route path='/createPoll' element={<CreatePoll />} />
                     <Route path='/poll/:pollId' element={<Poll />} />
-                    
                     <Route path='/login' element={<SignIn />} />
                     <Route path='/register' element={<Register />} />
                     <Route path='/mustBeMember' element={<MustBeMember />} />
