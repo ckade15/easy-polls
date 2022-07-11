@@ -8,7 +8,8 @@ const jwt = require('jsonwebtoken');
 // @access Public
 exports.createPoll = async (req, res, next) => {
     let errors = []
-    const {sessionToken, userId, item, pollLength, createdBy} = req.body;
+    const {sessionToken, title, userId, item, pollLength, createdBy} = req.body;
+    
  
     try{
         if (sessionToken === undefined || sessionToken === null || sessionToken === ''){
@@ -26,47 +27,56 @@ exports.createPoll = async (req, res, next) => {
         if (createdBy === undefined || createdBy === null || createdBy === ''){
             errors.push('Poll creator is required');
         }
+        if (title === undefined || title === null || title === ''){
+            errors.push('Poll title is required');
+        }
 
-        if (errors){
+        if (errors.length > 0){
             return res.status(200).json({
                 success: false,
                 error: errors
             });
         }
 
-        const validUser = await User.findOne({_id: userId});
+        const validUser = await User.findOne({_id: userId, sessionToken: sessionToken});
+        
         if (validUser) {
-            jwt.verify(sessionToken, validUser.sessionToken, (valid, err) => {
-                if (err) {
-                    return res.status(200).json({
-                        success: false,
-                        message: 'Invalid session token'
-                    });
-                }
-                if (valid){
-                    const poll = new Poll({
-                        userId: userId,
-                        item: [{
-                            title: item.title,
-                            votes: 0
-                        }],
-                        pollLength: pollLength,
-                        createdBy: createdBy
-                    });
-                    poll.save((err, poll) => {
-                        if (err){
-                            return res.status(200).json({
-                                success: false,
-                                error: err
-                            });
-                        }
+
+            try{
+                const poll = new Poll({
+                    userId: userId,
+                    title: title,
+                    item: item,
+                    pollLength: pollLength,
+                    createdBy: createdBy,
+                    pollStatus: true,
+                    createdAt: new Date.now(),
+                    totalVotes: 0,
+
+                });
+                
+                poll.save((err, poll) => {
+                    if (err){
                         return res.status(200).json({
-                            success: true,
-                            message: 'Poll created successfully'
+                            success: false,
+                            error: err
                         });
+                    }
+                    return res.status(200).json({
+                        success: true,
+                        message: 'Poll created successfully'
                     });
-                }
-            });
+                });
+
+            }catch(e){
+                console.log('cant create poll');
+                return res.status(200).json({
+                    success: false,
+                    err: e,
+                    message: 'Error creating poll'
+                });
+            }
+            
     
         }else{
             return res.status(200).json({

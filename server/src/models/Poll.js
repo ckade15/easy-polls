@@ -3,15 +3,15 @@ const mongoose = require('mongoose');
 const Poll = new mongoose.model(
     "Poll",
     new mongoose.Schema({
-        _id: Number,
         userId: Number,
+        title: String,
         item: [{
             id: Number,
-            title: String,
+            name: String,
             votes: Number
         }],
         pollStatus: Boolean,
-        pollEnd: Date,
+        pollLength: Number,
         createdAt: Date,
         createdBy: String,
         totalVotes: Number,
