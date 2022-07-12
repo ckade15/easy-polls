@@ -35,14 +35,12 @@ const io = new Server(server, {
 
 io.on('connection', (socket) => {
     console.log('a user connected');
-    
+
     socket.broadcast.emit('user connected', {
         userId: socket.id
     });
 
     socket.on('createPoll', (poll) => {
-        const poll = poll;
-        
 
     })
 
