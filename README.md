@@ -4,4 +4,4 @@
   
 ## To-Do
 - [x] Fix create poll endpoint
-- [] Implements socket.io on both client and server to send updated poll information
+- [ ] Implements socket.io on both client and server to send updated poll information
