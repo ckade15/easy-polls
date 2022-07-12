@@ -17,8 +17,8 @@ const Poll = new mongoose.model(
         createdBy: {type: String},
         totalVotes: {type: Number},
         hasVoted: [{
-            userId: {type: Number},
-            ipAddress: {type: String}
+            required: false,
+            userVoterId: {type: String, required: false}
         }],
     }, {timestamps: true})
 );
