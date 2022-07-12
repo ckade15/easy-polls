@@ -9,7 +9,6 @@ const jwt = require('jsonwebtoken');
 exports.createPoll = async (req, res, next) => {
     let errors = []
     const {sessionToken, title, userId, item, pollLength, createdBy} = req.body;
-    console.log(item)
     
  
     try{
@@ -51,11 +50,13 @@ exports.createPoll = async (req, res, next) => {
                     pollLength: pollLength,
                     createdBy: createdBy,
                     pollStatus: true,
-                    createdAt: new Date.now(),
+                    createdAt: new Date(),
                     totalVotes: 0,
 
                 });
                 
+                return res.status(200).json({success: true, poll: poll})
+                /*
                 poll.save((err, poll) => {
                     if (err){
                         return res.status(200).json({
@@ -63,11 +64,18 @@ exports.createPoll = async (req, res, next) => {
                             error: err
                         });
                     }
+                    if (poll){
+                        return res.status(200).json({
+                            success: true,
+                            poll: poll,
+                            message: 'Poll created successfully'
+                        });
+                    }
                     return res.status(200).json({
                         success: true,
                         message: 'Poll created successfully'
                     });
-                });
+                });*/
 
             }catch(e){
                 console.log('cant create poll');

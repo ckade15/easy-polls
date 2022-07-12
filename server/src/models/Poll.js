@@ -3,22 +3,24 @@ const mongoose = require('mongoose');
 const Poll = new mongoose.model(
     "Poll",
     new mongoose.Schema({
-        userId: Number,
-        title: String,
+        userId: {
+            type: String,
+            required: [true, 'userId is required']
+        }, 
+        title: {type: String},
         item: [{
-            name: String,
-            votes: Number
+            name: {type: String},
+            votes: {type: Number}
         }],
-        pollStatus: Boolean,
-        pollLength: Number,
-        createdAt: Date,
-        createdBy: String,
-        totalVotes: Number,
+        pollStatus: {type: Boolean},
+        pollLength: {type: Number},
+        createdBy: {type: String},
+        totalVotes: {type: Number},
         hasVoted: [{
-            userId: Number,
-            ipAddress: String
-        }]
-    })
+            userId: {type: Number},
+            ipAddress: {type: String}
+        }],
+    }, {timestamps: true})
 );
 
 module.exports = Poll;
