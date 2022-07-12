@@ -1,11 +1,11 @@
-const { getPoll } = require("../controllers/poll.controller");
+const { getPoll, closePoll } = require("../controllers/poll.controller");
 
 const users = []
 const poll = undefined
 
-const createPoll = (pollId) => {
+const createPoll = async (pollId, sessionToken) => {
     poll = getPoll(pollId)
-    setTimeout(poll.pollLength, )
+    setTimeout(poll.pollLength, closePoll(pollId));
 }
 const joinPoll = (id, pollId) =>{
     const user = {id, pollId};
@@ -13,8 +13,8 @@ const joinPoll = (id, pollId) =>{
     return user;
 }
 
-const vote = (id, pollId, itemId) => {
-
+const vote = (pollId) => {
+    poll = getPoll(pollId);
 }
 
 const getCurrentUser = (id) => {
