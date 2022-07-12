@@ -43,7 +43,7 @@ exports.createPoll = async (req, res, next) => {
         if (validUser) {
 
             try{
-                const poll = Poll.create({
+                const poll = await new Poll({
                     userId: userId,
                     title: title,
                     item: item,
