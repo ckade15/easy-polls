@@ -29,11 +29,22 @@ const io = new Server(server, {
     cors: {
         origin: '*',
         methods: ['GET', 'POST', 'PUT', 'DELETE'],
+        autoconnect: false
     } 
 });
 
 io.on('connection', (socket) => {
     console.log('a user connected');
+    
+    socket.broadcast.emit('user connected', {
+        userId: socket.id
+    });
+
+    socket.on('createPoll', (poll) => {
+        const poll = poll;
+        
+
+    })
 
     socket.on('joinPoll', (pollId, userId) => {
 
