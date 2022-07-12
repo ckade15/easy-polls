@@ -107,28 +107,46 @@ exports.createPoll = async (req, res, next) => {
 // @access Public
 exports.vote = async (req, res, next) => {
     let errors = []
-    const {pollId, index, userId, ipAddress} = req.body;
+    const {pollId, index, userId} = req.body;
 
     if (pollId === undefined || pollId === null || pollId === ''){
         errors.push('Poll id is required');
     }
     if (index === undefined || index === null || index === ''){
-        errors.push('Index is required');
+        errors.push('Item id is required');
     }
     if ((userId === undefined || userId === null || userId === '') && (ipAddress === undefined || ipAddress === null || ipAddress === '')){
         errors.push('User id or ip address is required');
     }
 
-    if (errors){
+    if (errors.length > 0){
         return res.status(200).json({
             success: false,
             error: errors
         });
     }else{
+        
         const poll = await Poll.findOne({_id: pollId});
+        
         if (poll){
-            poll.items[index].votes++;
-            poll.totalVotes++;
+            if (!poll.pollStatus){
+                return res.status(200).json({
+                    success: false,
+                    message: 'Poll has expired'
+                });
+            }
+            poll.hasVoted.map((user)=>{
+                if (user._id == userId){
+                    return res.status(200).json({
+                        success: false,
+                        message: "User has already voted"
+                    })
+                }
+            });
+            poll.totalVotes = poll.totalVotes+1;
+            poll.item[index].votes++;
+            poll.hasVoted.push(userId)
+
             await poll.save();
             return res.status(200).json({
                 success: true,
@@ -162,6 +180,31 @@ exports.getPoll = async (req, res, next) => {
         return res.status(200).json({
             success: false,
             message: 'Poll not found'
+        });
+    }
+}
+
+// @route Post api/poll/close/:pollId
+// @desc Close poll
+// @params pollId
+// @access Private
+exports.closePoll = async (req, res, next) => {
+    const {pollId} = req.params;
+    const {sessionToken} = req.body;
+
+    const valid = await User.findOne({sessionToken: sessionToken})
+    const poll = await Poll.findOne({_id: pollId});
+    if (poll && valid){
+        poll.pollStatus = false;
+        poll.save();
+        return res.status(200).json({
+            success: true,
+            message: "Poll successfully closed"
+        });
+    }else{
+        return res.status(200).json({
+            success: false,
+            message: 'Poll not found or invalid sessionToken'
         });
     }
 }

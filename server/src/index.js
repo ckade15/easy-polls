@@ -7,6 +7,7 @@ const path = require('path')
 const { Server } = require('socket.io');
 const cors = require('cors');
 const connectDB = require('./config/db');
+const { joinPoll, leavePoll, getCurrentUser } = require('./utils/polls');
 
 // DOTENV Config
 require('dotenv').config({ path: path.resolve(__dirname, '../.env') })
@@ -40,12 +41,8 @@ io.on('connection', (socket) => {
         userId: socket.id
     });
 
-    socket.on('createPoll', (poll) => {
-
-    })
-
-    socket.on('joinPoll', (pollId, userId) => {
-
+    socket.on('joinPoll', ({ userId, pollId }) => {
+        const user = joinPoll(userId, pollId)
     });
 
     socket.on('vote', (pollId, index, ipAddr) => {

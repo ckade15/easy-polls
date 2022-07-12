@@ -20,10 +20,13 @@ router
     .get(controller.getPoll)
 
 router
-    .route('delete/:pollId')
+    .route('/delete/:pollId')
     .get((req, res) => {
         res.send('Delete Poll page');
     })
     .delete(controller.deletePoll);
+router
+    .route('/close/:pollId')
+    .post(controller.closePoll)
 
 module.exports = router;
