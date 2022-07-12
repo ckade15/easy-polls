@@ -9,6 +9,7 @@ const jwt = require('jsonwebtoken');
 exports.createPoll = async (req, res, next) => {
     let errors = []
     const {sessionToken, title, userId, item, pollLength, createdBy} = req.body;
+    console.log(item)
     
  
     try{
@@ -43,7 +44,7 @@ exports.createPoll = async (req, res, next) => {
         if (validUser) {
 
             try{
-                const poll = new Poll({
+                const poll = Poll.create({
                     userId: userId,
                     title: title,
                     item: item,

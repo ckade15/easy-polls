@@ -6,7 +6,6 @@ const Poll = new mongoose.model(
         userId: Number,
         title: String,
         item: [{
-            id: Number,
             name: String,
             votes: Number
         }],
@@ -21,3 +20,5 @@ const Poll = new mongoose.model(
         }]
     })
 );
+
+module.exports = Poll;
