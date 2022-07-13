@@ -19,6 +19,8 @@ export const vote = (pollId, index, userId) => {
 
 export const getIp = async () => {
     const res = await axios.get('https://geolocation-db.com/json/')
+
+    console.log(res.data.IPv4)
     return res.data.IPv4;
 }
 

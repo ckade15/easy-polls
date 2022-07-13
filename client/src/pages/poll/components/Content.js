@@ -5,7 +5,7 @@ const Content = (props) => {
     const [state, setState] = useState({
         voted: false,
         show: false,
-        error: ''
+        error: '',
     });
 
     
@@ -20,9 +20,10 @@ const Content = (props) => {
                 request.catch(e => console.log(e))
             }
             
+            
             return (
                 <a name={index} onClick={e => handleVote(e)} 
-                className='block hover:cursor-pointer mb-8 text-lg bg-[#AF4D98] rounded-lg p-2 text-white 
+                className='block hover:cursor-pointer mb-8 text-lg bg-[#AF4D98] rounded-md p-4 text-white 
                 font-bold hover:shadow-lg hover:bg-white hover:border-2 hover:border-[#AF4D98] hover:text-[#AF4D98] 
                 border-2 border-[#AF4D98]' key={item.name}>{item.name}</a>
             )
@@ -35,7 +36,7 @@ const Content = (props) => {
             const percentage = (item.votes / props.poll.totalVotes) * 100;
             
             return (<a name={index}
-                className='block hover:cursor-pointer mb-8 text-lg bg-[#AF4D98] rounded-lg p-2 text-white 
+                className='block hover:cursor-pointer mb-8 text-lg bg-[#AF4D98] rounded-md p-4 text-white 
                 font-bold hover:shadow-lg hover:bg-white hover:border-2 hover:border-[#AF4D98] hover:text-[#AF4D98] 
                 border-2 border-[#AF4D98]' key={item.name}>{item.name}&nbsp; {percentage}%&nbsp; &nbsp;{item.votes} Votes</a>
             )
@@ -56,8 +57,8 @@ const Content = (props) => {
     }, [state.userId, state.show, state.voted])
 
     return (
-        <section className='bg-[#AF4D98] w-full min-h-screen flex place-items-center justify-center text-center font-mono'>
-            <div className='w-1/2 min-w-[500px] bg-[#9DF7E5] ml-auto mr-auto rounded-md p-10 flex-col justify-center place-items-center '>
+        <section className='bg-[#AF4D98] w-full min-h-screen text-center font-mono pt-20'>
+            <div className='w-1/2 min-w-[500px] bg-[#9DF7E5] ml-auto mr-auto rounded-md p-10 flex-col justify-center place-items-center pb-20 pt-20'>
                 <p className='text-2xl'>Poll created by {props.poll.createdBy}</p>
                 <p className='text-2xl mt-4 mb-8'>Poll Title: {props.poll.title}</p>
                 {props.poll.pollStatus || state.voted ? 

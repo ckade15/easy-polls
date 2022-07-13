@@ -6,13 +6,14 @@ import UserContext from "../../setup/app-context-manager";
 import { getPoll, getIp } from "./utils";
 import { checkToken } from "../../setup/auth";
 import Content from "./components/Content";
+import axios from "axios";
 
 const Poll = (props) => {
     const [context, setContext] = useContext(UserContext);
     const [state, setState] = useState({
         loading: true,
         poll: {},
-        userId: undefined
+        userId: ""
     });
     let {pollId} = useParams();
 
@@ -22,27 +23,38 @@ const Poll = (props) => {
             const poll = getPoll(pollId);
             poll.then(res => {
                 setState({
-                    loading: false,
-                    poll: res.data.poll
+                    ...state,
+                    poll: res.data.poll,
                 })
-            })
-        }
-    }, [state.poll]);
+                /*
+                try{
+                    if (context.userId.length > 0){
+                        setState({
+                            ...state,
+                            poll: res.data.poll,
+                            userId: context.userId,
+                            loading: false
+                        });
+                    }
 
-    const setUserId = () => {
-        if (props.context.userId.length > 0){
-            setState({
-                ...state,
-                userId: props.context.userId
-            });
-        }else{
-            const ip = getIp();
-            setState({
-                ...state,
-                userId: ip
+                }catch{
+                    
+                    const ip = getIp();
+                    console.log(ip.data.IPv4)
+                    setState({
+                        ...state,
+                        poll: res.data.poll,
+                        userId: ip,
+                        loading: false
+                    });
+                }*/
             });
         }
+    }, []);
 
+    const getIp = async () => {
+        const ip = await axios.get('https://geolocation-db.com/json/')
+        return ip.data.IPv4;
     }
 
     const alreadyLoggedIn = () => {

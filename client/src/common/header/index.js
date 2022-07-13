@@ -11,8 +11,8 @@ const Header = (props) => {
         logout: false
     })
     const location = useLocation();
-    const btnStyle = 'bg-[#F4E4BA] font-bold p-2 rounded-md text-xl text-gray-500 hover:shadow-lg hover:text-[#F4E4BA] hover:bg-[#AF4D98] ';
-    const logoutBtn = 'bg-red-400 font-bold p-2 rounded-md text-xl text-gray-500 hover:shadow-lg hover:text-[#AF4D98] hover:bg-red-200 ';
+    const btnStyle = 'bg-[#F4E4BA] font-bold p-4 rounded-md text-xl text-gray-500 hover:shadow-lg hover:text-[#F4E4BA] hover:bg-[#AF4D98] ';
+    const logoutBtn = 'bg-red-400 font-bold p-4 rounded-md text-xl text-gray-500 hover:shadow-lg hover:text-[#AF4D98] hover:bg-red-200 ';
 
     const handleLogout = e => {
         localStorage.removeItem('sessionToken');
