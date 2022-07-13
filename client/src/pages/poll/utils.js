@@ -18,10 +18,10 @@ export const vote = (pollId, index, userId) => {
 }
 
 export const getIp = async () => {
-    const res = await axios.get('https://geolocation-db.com/json/')
+    const res = await axios.get('https://api.ipify.org?format=json')
 
     console.log(res.data.IPv4)
-    return res.data.IPv4;
+    return res.data.ip;
 }
 
 export const checkVoted = () => {

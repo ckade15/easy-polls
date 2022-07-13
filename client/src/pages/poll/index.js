@@ -15,60 +15,66 @@ const Poll = (props) => {
         poll: {},
         userId: ""
     });
+
+
     let {pollId} = useParams();
 
     useEffect(() => {
         alreadyLoggedIn();
         if (state.loading){
-            const poll = getPoll(pollId);
             let userId = ''
+            const poll = getPoll(pollId);
             try{
-                if (context.userId.length > 0){
+                if (context.id.length > 0){
                     userId = context.userId;
                 }
-
-            }catch{
-                const ip = getIp();
-                userId = ip
-                
-            }
-            console.log(userId)
-            poll.then(res => {
-                setState({
-                    ...state,
-                    poll: res.data.poll,
-                    userId: userId,
-                    loading: false
-                })
-                /*
-                try{
-                    if (context.userId.length > 0){
-                        setState({
-                            ...state,
-                            poll: res.data.poll,
-                            userId: context.userId,
-                            loading: false
-                        });
-                    }
-
-                }catch{
-                    
-                    const ip = getIp();
-                    console.log(ip.data.IPv4)
+                poll.then(res => {
                     setState({
                         ...state,
                         poll: res.data.poll,
-                        userId: ip,
+                        userId: userId,
                         loading: false
-                    });
-                }*/
-            });
+                    })
+                    /*
+                    try{
+                        if (context.userId.length > 0){
+                            setState({
+                                ...state,
+                                poll: res.data.poll,
+                                userId: context.userId,
+                                loading: false
+                            });
+                        }
+    
+                    }catch{
+                        
+                        const ip = getIp();
+                        console.log(ip.data.IPv4)
+                        setState({
+                            ...state,
+                            poll: res.data.poll,
+                            userId: ip,
+                            loading: false
+                        });
+                    }*/
+                });
+
+            }catch{
+                console.log('bye')
+                const ip = getIp();
+                userId = ip
+                axios.all([poll, ip])
+                
+            }
+            console.log(userId)
+
         }
     }, []);
 
     const getIp = async () => {
-        const ip = await axios.get('https://geolocation-db.com/json/')
-        return ip.data.IPv4;
+        fetch('https://geolocation-db.com/json/')
+        .then(response => response.json())
+        .then(data => setState({...state, userId: data.IPv4}))
     }
 
     const alreadyLoggedIn = () => {
