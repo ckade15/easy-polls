@@ -108,4 +108,5 @@ app.get('/', (req, res) => {
 
 const PORT = process.env.PORT || 5001;
 
-app.listen(PORT, console.log(`\nServer listening on port ${PORT}`));
+server.listen(PORT, () => console.log(``))
+//app.listen(PORT, console.log(`\nServer listening on port ${PORT}`));
