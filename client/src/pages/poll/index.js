@@ -78,8 +78,8 @@ const Poll = (props) => {
     return (
         <React.Fragment>
             <Header />
-            {context.id.length > 0 ? <Content poll={state.poll} context={context} loading={state.loading} userId={context.id}/>
-            : <Content poll={state.poll} context={context} loading={state.loading} userId={getIp}/> }
+            <Content poll={state.poll} context={context} loading={state.loading} userId={context.id}/>
+            
             <Footer />
         </React.Fragment>
     );
