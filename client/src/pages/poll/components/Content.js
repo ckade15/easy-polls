@@ -20,7 +20,7 @@ const Content = (props) => {
             <div className='w-1/2 min-w-[500px] bg-[#9DF7E5] h-fit ml-auto mr-auto rounded-md p-10 flex-col justify-center place-items-center '>
                 <p className='text-2xl'>Poll created by {props.poll.createdBy}</p>
                 <p className='text-2xl mt-4 mb-8'>Poll Title: {props.poll.title}</p>
-                {mapChoices()}
+                {props.loading ? <></> : mapChoices()}
             </div>
         </section>
     )
