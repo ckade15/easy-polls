@@ -77,9 +77,8 @@ const Poll = (props) => {
 
     return (
         <React.Fragment>
-            <Header />
-            <Content poll={state.poll} context={context} loading={state.loading} userId={context.id}/>
-            
+            <Header page="Poll" />
+            <Content poll={state.poll} context={context} loading={state.loading} userId={context.id} />
             <Footer />
         </React.Fragment>
     );

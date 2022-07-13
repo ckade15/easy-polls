@@ -24,7 +24,7 @@ const Content = (props) => {
                 <a name={index} onClick={e => handleVote(e)} 
                 className='block hover:cursor-pointer mb-8 text-lg bg-[#AF4D98] rounded-lg p-2 text-white 
                 font-bold hover:shadow-lg hover:bg-white hover:border-2 hover:border-[#AF4D98] hover:text-[#AF4D98] 
-                border-2 border-[#AF4D98]'>{item.name}</a>
+                border-2 border-[#AF4D98]' key={item.name}>{item.name}</a>
             )
         })
         return choices;
@@ -37,7 +37,7 @@ const Content = (props) => {
             return (<a name={index}
                 className='block hover:cursor-pointer mb-8 text-lg bg-[#AF4D98] rounded-lg p-2 text-white 
                 font-bold hover:shadow-lg hover:bg-white hover:border-2 hover:border-[#AF4D98] hover:text-[#AF4D98] 
-                border-2 border-[#AF4D98]'>{item.name}&nbsp; {percentage}%&nbsp; &nbsp;{item.votes} Votes</a>
+                border-2 border-[#AF4D98]' key={item.name}>{item.name}&nbsp; {percentage}%&nbsp; &nbsp;{item.votes} Votes</a>
             )
         });
         return choices

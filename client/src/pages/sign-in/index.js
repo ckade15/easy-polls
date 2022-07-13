@@ -125,11 +125,15 @@ const SignIn = (props) => {
 
             }
 
-            if (err.length > 0){
-                setState({
-                    ...state,
-                    error: err
-                });
+            try{
+                if (err.length > 0){
+                    setState({
+                        ...state,
+                        error: err
+                    });
+                }
+            }catch{
+
             }
 
         }else{
