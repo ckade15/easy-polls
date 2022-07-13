@@ -61,7 +61,7 @@ const Poll = (props) => {
     return (
         <React.Fragment>
             <Header />
-            <Content poll={state.poll} />
+            <Content poll={state.poll} context={context}/>
             <Footer />
         </React.Fragment>
     );
