@@ -42,7 +42,8 @@ io.on('connection', (socket) => {
         userId: socket.id
     });
 
-    socket.on('joinPoll', ({ userId, pollId }) => {
+    socket.on('joinPoll', ( userId, pollId ) => {
+        console.log(userId, pollId)
         const user = joinPoll(userId, pollId)
         socket.join(user.pollId)
         socket.emit('message', 'Welcome to poll');
@@ -74,6 +75,7 @@ io.on('connection', (socket) => {
     
     socket.on('disconnect', () => {
         const user = leavePoll(socket.id);
+        console.log(socket)
         if (user){
             io.to(user.pollId).emit('message', `${user.id} has left the poll room.`);
             

@@ -48,7 +48,7 @@ const Poll = (props) => {
                     getIp(res.data.poll)
                 }).catch(e => console.log(e))
             }
-            socket.emit('joinPoll', {pollId: state.poll._id, userId: state.userId})
+            socket.emit('joinPoll', {pollId: state.poll._id, id: state.userId})
             setSocket(socket)
 
         }
