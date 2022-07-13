@@ -21,10 +21,23 @@ const Poll = (props) => {
         alreadyLoggedIn();
         if (state.loading){
             const poll = getPoll(pollId);
+            let userId = ''
+            try{
+                if (context.userId.length > 0){
+                    userId = context.userId;
+                }
+
+            }catch{
+                const ip = getIp();
+                userId = ip
+                
+            }
+            console.log(userId)
             poll.then(res => {
                 setState({
                     ...state,
                     poll: res.data.poll,
+                    userId: userId,
                     loading: false
                 })
                 /*
