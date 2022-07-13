@@ -3,13 +3,19 @@ import axios from "axios";
 const URL = 'http://localhost:5001/api/poll/create'
 
 export const createPoll = (sessionToken, title, userId, pollLength, createdBy, items) => {
+    const itms = items.map(item=> {
+        return {
+            name: item,
+            votes: 0
+        }
+    })
     const poll = axios.post(URL, {
         sessionToken: sessionToken,
         title: title, 
         userId: userId, 
         pollLength: pollLength, 
         createdBy: createdBy,
-        item: items
+        item: itms
     });
     return poll;
     

@@ -67,7 +67,7 @@ const Content = () => {
         
         if (validate(e)){
             const fullName = `${context.firstName} ${context.lastName}`;
-            const poll = createPoll(context.sessionToken, state.title, context.id, state.pollLength, fullName, state.items);
+            const poll = createPoll(context.sessionToken, state.name, context.id, state.pollLength, fullName, state.items);
             poll.then(res => console.log(res))
             poll.catch(e=> console.log(e))
 
@@ -100,7 +100,7 @@ const Content = () => {
                 {state.items.map((item, index) =>{
                     const handleInput = (e) => {
                         const updatedState = {...state};
-                        updatedState.items[index].name = e.target.value;
+                        updatedState.items[index] = e.target.value;
                         setState(updatedState);
                     }
                     
