@@ -184,6 +184,26 @@ exports.getPoll = async (req, res, next) => {
     }
 }
 
+// @route Get api/poll/current
+// @desc Get current polls
+// @params pollId
+// @access Public
+exports.getCurrentPolls = async (req, res, next) => {
+    let errors = []
+    const polls = await Poll.find({pollStatus: true});
+    if (polls){
+        return res.status(200).json({
+            success: true,
+            polls: polls
+        });
+    }else{
+        return res.status(200).json({
+            success: false,
+            message: 'Poll not found'
+        });
+    }
+}
+
 // @route Post api/poll/close/:pollId
 // @desc Close poll
 // @params pollId

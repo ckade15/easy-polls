@@ -15,7 +15,7 @@ const Content = (props) => {
 
                 const request = vote(props.poll._id, index, props.userId);
                 request.then(res => {
-                    console.log(res)
+                    setState({...state, voted: true})
                 });
                 request.catch(e => console.log(e))
             }
@@ -53,14 +53,14 @@ const Content = (props) => {
 
     useEffect(()=> {
         
-    }, [state.userId, state.show])
+    }, [state.userId, state.show, state.voted])
 
     return (
         <section className='bg-[#AF4D98] w-full min-h-screen flex place-items-center justify-center text-center font-mono'>
             <div className='w-1/2 min-w-[500px] bg-[#9DF7E5] ml-auto mr-auto rounded-md p-10 flex-col justify-center place-items-center '>
                 <p className='text-2xl'>Poll created by {props.poll.createdBy}</p>
                 <p className='text-2xl mt-4 mb-8'>Poll Title: {props.poll.title}</p>
-                {props.poll.pollStatus ? 
+                {props.poll.pollStatus || state.voted ? 
                     <>{state.show ? 
                         <React.Fragment>
                             {props.loading ? <></> : mapResults()}

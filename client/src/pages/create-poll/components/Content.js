@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import UserContext from '../../../setup/app-context-manager';
 import addCircle from '../../../assets/add_circle.svg';
 import cancel from '../../../assets/cancel.svg'
-import { createPoll } from '../utils';
+import { createPoll, redirectToPoll } from '../utils';
 import { Navigate } from 'react-router-dom';
 
 const Content = () => {
@@ -11,7 +11,9 @@ const Content = () => {
         name: "",
         pollLength: 0,
         items: [], 
-        errors: []
+        errors: [],
+        success: false,
+        pollId: ''
     });
     
     const handleAdd = () => {
@@ -73,6 +75,7 @@ const Content = () => {
                 console.log(res)
                 if (res.data.success){
                     console.log('Successfully created poll')
+                    setState({...state, success: true, pollId: res.data.poll._id})
                 }else{
                     console.log('Poll not created')
                 }
@@ -131,6 +134,7 @@ const Content = () => {
                 }) : <></>}
                 </div>
                 {state.items.length > 0 ? <a className='bg-red-200 p-4 flex rounded-md w-fit ml-auto mr-auto mt-10 mb-10 font-bold text-[#AF4D98] border-2 border-[#AF4D98] shadow-md hover:bg-[#0d205f] hover:cursor-pointer hover:opacity-70' onClick={e => handleSubmit(e)}>Create Poll</a> : <></>}
+                {state.success ? <Navigate to={`/poll/${state.pollId}`} /> : <></>}
             </section>
         </main>
     );

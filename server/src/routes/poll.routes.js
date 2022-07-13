@@ -28,5 +28,8 @@ router
 router
     .route('/close/:pollId')
     .post(controller.closePoll)
+router
+    .route('/current')
+    .get(controller.getCurrentPolls)
 
 module.exports = router;
