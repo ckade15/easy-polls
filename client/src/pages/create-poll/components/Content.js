@@ -68,7 +68,14 @@ const Content = () => {
         if (validate(e)){
             const fullName = `${context.firstName} ${context.lastName}`;
             const poll = createPoll(context.sessionToken, state.name, context.id, state.pollLength, fullName, state.items);
-            poll.then(res => console.log(res))
+            poll.then(res => {
+                console.log(res)
+                if (res.data.success){
+                    console.log('Successfully created poll')
+                }else{
+                    console.log('Poll not created')
+                }
+            })
             poll.catch(e=> console.log(e))
 
         }else{
@@ -91,7 +98,7 @@ const Content = () => {
                     <p className='text-lg'>Enter how many hours you'd like your poll to be:</p>
                     <input type='number' id='pollLength' name='pollLength' className='ml-8 rounded-md p-1 shadow-md h-fit' onChange={e => handleChange(e)}/>
                 </div>
-                <div className='flex justify-center place-items-center mt-6'>
+                <div className='flex justify-center place-items-center mt-6 mb-6'>
                     <p className='mr-6'>Click here to add a poll item</p>
                     <a className="hover:cursor-pointer h-fit w-fit " ><img src={addCircle} className="" onClick={handleAdd}/></a>
                 </div>
