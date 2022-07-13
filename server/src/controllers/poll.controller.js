@@ -147,7 +147,7 @@ exports.vote = async (req, res, next) => {
             poll.item[index].votes++;
             poll.hasVoted.push(userId)
 
-            await poll.save();
+            poll.save();
             return res.status(200).json({
                 success: true,
                 message: 'Vote casted successfully'

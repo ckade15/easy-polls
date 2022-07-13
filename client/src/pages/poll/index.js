@@ -61,20 +61,19 @@ const Poll = (props) => {
 
             }catch{
                 console.log('bye')
-                const ip = getIp();
-                userId = ip
-                axios.all([poll, ip])
-                
+                poll.then(res => {
+                    getIp(res.data.poll)
+                }).catch(e => console.log(e))
             }
             console.log(userId)
 
         }
     }, []);
 
-    const getIp = async () => {
+    const getIp = async (poll) => {
         fetch('https://geolocation-db.com/json/')
         .then(response => response.json())
-        .then(data => setState({...state, userId: data.IPv4}))
+        .then(data => {setState({...state, userId: data.IPv4, poll: poll, loading: false});console.log(data.IPv4)})
     }
 
     const alreadyLoggedIn = () => {
@@ -110,7 +109,7 @@ const Poll = (props) => {
     return (
         <React.Fragment>
             <Header page="Poll" />
-            <Content poll={state.poll} context={context} loading={state.loading} userId={context.id} />
+            <Content poll={state.poll} context={context} loading={state.loading} userId={state.userId} />
             <Footer />
         </React.Fragment>
     );
