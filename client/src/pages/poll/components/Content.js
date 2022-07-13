@@ -33,7 +33,8 @@ const Content = (props) => {
 
     const mapResults = () => {
         const choices = props.poll.item.map((item, index) => {
-            const percentage = (item.votes / props.poll.totalVotes) * 100;
+            let percentage = (item.votes / props.poll.totalVotes) * 100;
+            percentage = parseFloat(percentage).toFixed(2);
             
             return (<a name={index}
                 className='block hover:cursor-pointer mb-8 text-lg bg-[#AF4D98] rounded-md p-4 text-white 

@@ -24,7 +24,7 @@ const Header = (props) => {
         
     }, [context.value, state.logout])
     const dtAnon = (
-        <nav className='p-4 bg-[#9DF7E5] flex justify-between'>
+        <nav className='p-4 bg-[#9DF7E5] flex justify-between place-items-center'>
             <div className='w-1/3 flex'>
                 <a href="/"><img src={pollPic} className='h-12 w-20'/></a>
                 <p className='font-bold text-xl ml-6'>{props.page}</p>
@@ -37,7 +37,7 @@ const Header = (props) => {
     );
 
     const dtLoggedIn = (
-        <nav className='p-4 bg-[#9DF7E5] flex justify-between'>
+        <nav className='p-4 bg-[#9DF7E5] flex justify-between place-items-center'>
             <div className='w-1/3 flex place-items-center'>
                 <a href="/"><img src={pollPic} className='h-12 w-20'/></a>
                 <p className='font-bold text-xl ml-6'>{props.page}</p>
