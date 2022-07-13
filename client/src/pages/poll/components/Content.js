@@ -1,5 +1,7 @@
-import React, {useEffect, useState} from 'react'
-import { getIp, vote } from '../utils'
+import React, {useEffect, useState} from 'react';
+import { getIp, vote } from '../utils';
+import socketio from 'socket.io-client';
+import { SOCKET_URL } from '../../../setup/auth/config';
 
 const Content = (props) => {
     const [state, setState] = useState({
@@ -62,7 +64,9 @@ const Content = (props) => {
     }
 
     useEffect(()=> {
-        //checkVoted()
+        // Connect to socket
+        
+
     }, [state.userId, state.show, state.voted])
 
     return (

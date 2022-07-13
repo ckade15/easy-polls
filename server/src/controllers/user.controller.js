@@ -102,7 +102,7 @@ exports.register = async (req, res, next) => {
                         return res.status(201).json({
                             success: true,
                             data: "User created successfully, check your email for confirmation code"
-                        });
+                        }); 
                     }
                 });
             }else {

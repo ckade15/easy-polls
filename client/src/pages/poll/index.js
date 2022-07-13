@@ -7,6 +7,8 @@ import { getPoll, getIp } from "./utils";
 import { checkToken } from "../../setup/auth";
 import Content from "./components/Content";
 import axios from "axios";
+import io from 'socket.io-client';
+import { SOCKET_URL } from '../../setup/auth/config';
 
 const Poll = (props) => {
     const [context, setContext] = useContext(UserContext);
@@ -16,12 +18,16 @@ const Poll = (props) => {
         userId: ""
     });
 
+    const [socket, setSocket] = useState(null);
+
 
     let {pollId} = useParams();
 
     useEffect(() => {
         alreadyLoggedIn();
         if (state.loading){
+            const socket = io(SOCKET_URL);
+            
             let userId = ''
             const poll = getPoll(pollId);
             try{
@@ -42,7 +48,8 @@ const Poll = (props) => {
                     getIp(res.data.poll)
                 }).catch(e => console.log(e))
             }
-            console.log(userId)
+            socket.emit('joinPoll', {pollId: state.poll._id, userId: state.userId})
+            setSocket(socket)
 
         }
     }, []);
@@ -86,7 +93,7 @@ const Poll = (props) => {
     return (
         <React.Fragment>
             <Header page="Poll" />
-            <Content poll={state.poll} context={context} loading={state.loading} userId={state.userId} />
+            <Content poll={state.poll} context={context} loading={state.loading} userId={state.userId} socket={socket} setSocket={setSocket} />
             <Footer />
         </React.Fragment>
     );
