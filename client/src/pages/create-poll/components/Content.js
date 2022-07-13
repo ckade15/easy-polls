@@ -3,6 +3,7 @@ import UserContext from '../../../setup/app-context-manager';
 import addCircle from '../../../assets/add_circle.svg';
 import cancel from '../../../assets/cancel.svg'
 import { createPoll } from '../utils';
+import { Navigate } from 'react-router-dom';
 
 const Content = () => {
     const [context, setContext] = useContext(UserContext);
