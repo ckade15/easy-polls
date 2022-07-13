@@ -25,6 +25,7 @@ const Poll = (props) => {
                 setState({
                     ...state,
                     poll: res.data.poll,
+                    loading: false
                 })
                 /*
                 try{
