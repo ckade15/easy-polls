@@ -1,8 +1,11 @@
 import React from "react";
 
 const Poll = (props) => {
+    
     return (
-        <section></section>
+        <section>
+
+        </section>
     );
 }
 

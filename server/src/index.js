@@ -7,7 +7,8 @@ const path = require('path')
 const { Server } = require('socket.io');
 const cors = require('cors');
 const connectDB = require('./config/db');
-const { joinPoll, leavePoll, getCurrentUser } = require('./utils/polls');
+const { joinPoll, leavePoll, getCurrentUser, getPollUsers } = require('./utils/polls');
+const { getPoll } = require('./controllers/poll.controller');
 
 // DOTENV Config
 require('dotenv').config({ path: path.resolve(__dirname, '../.env') })
@@ -43,13 +44,47 @@ io.on('connection', (socket) => {
 
     socket.on('joinPoll', ({ userId, pollId }) => {
         const user = joinPoll(userId, pollId)
+        socket.join(user.pollId)
+        socket.emit('message', 'Welcome to poll');
+
+        // Broadcast to others when users connects
+        socket.broadcast
+            .to(user.pollId)
+            .emit('message', `${user.userId} has joined the poll room.`);
+
+        // Send users and poll info
+        io.to(user.pollId).emit('roomUsers', {
+            pollId: user.pollId,
+            users: getCurrentUser(socket.id),
+            poll: getPoll(user.pollId)
+        });
+
     });
+    // Listen for poll votes
+    
 
-    socket.on('vote', (pollId, index, ipAddr) => {
-
+    socket.on('vote', (pollId) => {
+        const user = vote(pollId);
+        io.to(user.pollId).emit('roomUsers', {
+            pollId: user.pollId,
+            users: getCurrentUser(socket.id),
+            poll: getPoll(user.pollId)
+        });
     });
     
     socket.on('disconnect', () => {
+        const user = leavePoll(socket.id);
+        if (user){
+            io.to(user.pollId).emit('message', `${user.id} has left the poll room.`);
+            
+            // Sends users and room info
+            io.to(user.pollId).emit('roomUsers', {
+                pollId: user.pollId,
+                users: getPollUsers(user.pollId)
+            })
+
+        }
+        
         console.log('user disconnected');
     });
 

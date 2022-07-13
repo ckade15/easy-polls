@@ -1,3 +1,4 @@
+const { Socket } = require("socket.io");
 const { getPoll, closePoll } = require("../controllers/poll.controller");
 
 const users = []
@@ -9,12 +10,14 @@ const createPoll = async (pollId, sessionToken) => {
 }
 const joinPoll = (id, pollId) =>{
     const user = {id, pollId};
+
     users.push(user);
     return user;
 }
 
 const vote = (pollId) => {
     poll = getPoll(pollId);
+    return poll;
 }
 
 const getCurrentUser = (id) => {
@@ -34,5 +37,14 @@ const getPollUsers = (pollId) => {
 
 
 
+
+module.exports = {
+    joinPoll,
+    createPoll,
+    vote,
+    getCurrentUser,
+    leavePoll,
+    getPollUsers
+}
 
 
