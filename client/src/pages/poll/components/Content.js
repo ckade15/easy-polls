@@ -8,6 +8,14 @@ const Content = (props) => {
         error: '',
     });
 
+    const checkVoted = () => {
+        props.poll.hasVoted.map(poll => {
+            if (poll._id == props.userId){
+                console.log('has voted')
+                setState({...state, voted: true})
+            }
+        })
+    }
     
     const mapChoices = () => {
         const choices = props.poll.item.map((item, index) => {
@@ -15,7 +23,7 @@ const Content = (props) => {
 
                 const request = vote(props.poll._id, index, props.userId);
                 request.then(res => {
-                    setState({...state, voted: true})
+                    setState({...state, voted: true, show: true})
                 });
                 request.catch(e => console.log(e))
             }
@@ -34,7 +42,7 @@ const Content = (props) => {
     const mapResults = () => {
         const choices = props.poll.item.map((item, index) => {
             let percentage = (item.votes / props.poll.totalVotes) * 100;
-            percentage = parseFloat(percentage).toFixed(2);
+            percentage = parseFloat(percentage).toFixed(1);
             
             return (<a name={index}
                 className='block hover:cursor-pointer mb-8 text-lg bg-[#AF4D98] rounded-md p-4 text-white 
@@ -54,7 +62,7 @@ const Content = (props) => {
     }
 
     useEffect(()=> {
-        
+        //checkVoted()
     }, [state.userId, state.show, state.voted])
 
     return (
@@ -83,6 +91,7 @@ const Content = (props) => {
                     <div className='mb-10' />
                     </React.Fragment>
                 }
+                {checkVoted}
                 
             </div>
         </section>

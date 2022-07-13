@@ -35,32 +35,9 @@ const Poll = (props) => {
                         userId: userId,
                         loading: false
                     })
-                    /*
-                    try{
-                        if (context.userId.length > 0){
-                            setState({
-                                ...state,
-                                poll: res.data.poll,
-                                userId: context.userId,
-                                loading: false
-                            });
-                        }
-    
-                    }catch{
-                        
-                        const ip = getIp();
-                        console.log(ip.data.IPv4)
-                        setState({
-                            ...state,
-                            poll: res.data.poll,
-                            userId: ip,
-                            loading: false
-                        });
-                    }*/
                 });
 
             }catch{
-                console.log('bye')
                 poll.then(res => {
                     getIp(res.data.poll)
                 }).catch(e => console.log(e))
