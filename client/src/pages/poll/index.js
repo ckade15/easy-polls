@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import Footer from "../../common/footer";
 import Header from "../../common/header";
 import UserContext from "../../setup/app-context-manager";
-import { getPoll } from "./utils";
+import { getPoll, getIp } from "./utils";
 import { checkToken } from "../../setup/auth";
 import Content from "./components/Content";
 
@@ -11,7 +11,8 @@ const Poll = (props) => {
     const [context, setContext] = useContext(UserContext);
     const [state, setState] = useState({
         loading: true,
-        poll: {}
+        poll: {},
+        userId: undefined
     });
     let {pollId} = useParams();
 
@@ -26,7 +27,23 @@ const Poll = (props) => {
                 })
             })
         }
-    }, [state.poll])
+    }, [state.poll]);
+
+    const setUserId = () => {
+        if (props.context.userId.length > 0){
+            setState({
+                ...state,
+                userId: props.context.userId
+            });
+        }else{
+            const ip = getIp();
+            setState({
+                ...state,
+                userId: ip
+            });
+        }
+
+    }
 
     const alreadyLoggedIn = () => {
         const token = localStorage.getItem('sessionToken');
@@ -61,7 +78,8 @@ const Poll = (props) => {
     return (
         <React.Fragment>
             <Header />
-            <Content poll={state.poll} context={context} loading={state.loading}/>
+            {context.id.length > 0 ? <Content poll={state.poll} context={context} loading={state.loading} userId={context.id}/>
+            : <Content poll={state.poll} context={context} loading={state.loading} userId={getIp}/> }
             <Footer />
         </React.Fragment>
     );

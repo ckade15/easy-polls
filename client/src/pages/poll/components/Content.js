@@ -1,19 +1,37 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
+import { getIp, vote } from '../utils'
 
 const Content = (props) => {
-    
- 
+    const [state, setState] = useState({
+        voted: false,
+        userId: props.userId
+    });
 
+    
     const mapChoices = () => {
-        const choices = props.poll.item.map(item => {
+        const choices = props.poll.item.map((item, index) => {
+            const handleVote = e => {
+
+                const request = vote(props.poll._id, index, state.userId);
+                request.then(res => {
+                    console.log(res)
+                });
+                request.catch(e => console.log(e))
+            }
+            
             return (
-                <a className='block hover:cursor-pointer mb-4 text-lg bg-[#AF4D98] rounded-lg p-2 text-white font-bold hover:shadow-lg hover:bg-white hover:border-2 hover:border-[#AF4D98] hover:text-[#AF4D98] border-2 border-[#AF4D98]'>{item.name}</a>
+                <a name={index} onClick={e => handleVote(e)} 
+                className='block hover:cursor-pointer mb-4 text-lg bg-[#AF4D98] rounded-lg p-2 text-white 
+                font-bold hover:shadow-lg hover:bg-white hover:border-2 hover:border-[#AF4D98] hover:text-[#AF4D98] 
+                border-2 border-[#AF4D98]'>{item.name}</a>
             )
         })
         return choices;
     }
 
-    
+    useEffect(()=> {
+        
+    }, [state.userId])
 
     return (
         <section className='bg-[#AF4D98] w-full min-h-screen flex place-items-center justify-center text-center font-mono'>
