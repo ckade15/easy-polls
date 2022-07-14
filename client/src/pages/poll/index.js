@@ -50,8 +50,12 @@ const Poll = (props) => {
             }
             socket.emit('joinPoll', {pollId: state.poll._id, id: state.userId})
             setSocket(socket)
-
         }
+        /*
+        state.socket.on('roomUsers', (poll) => {
+
+        })*/
+
     }, []);
 
     const getIp = async (poll) => {

@@ -8,7 +8,7 @@ const { Server } = require('socket.io');
 const cors = require('cors');
 const connectDB = require('./config/db');
 const { joinPoll, leavePoll, getCurrentUser, getPollUsers } = require('./utils/polls');
-const { getPoll } = require('./controllers/poll.controller');
+const { getPoll } = require('./utils/polls');
 
 // DOTENV Config
 require('dotenv').config({ path: path.resolve(__dirname, '../.env') })
@@ -43,7 +43,7 @@ io.on('connection', (socket) => {
     });
 
     socket.on('joinPoll', ( userId, pollId ) => {
-        console.log(userId, pollId)
+        
         const user = joinPoll(userId, pollId)
         socket.join(user.pollId)
         socket.emit('message', 'Welcome to poll');
@@ -54,10 +54,9 @@ io.on('connection', (socket) => {
             .emit('message', `${user.userId} has joined the poll room.`);
 
         // Send users and poll info
+        const p = getPoll(user.pollId)
         io.to(user.pollId).emit('roomUsers', {
-            pollId: user.pollId,
-            users: getCurrentUser(socket.id),
-            poll: getPoll(user.pollId)
+            poll: p
         });
 
     });
@@ -67,12 +66,10 @@ io.on('connection', (socket) => {
     socket.on('vote', (pollId) => {
         const user = vote(pollId);
         io.to(user.pollId).emit('roomUsers', {
-            pollId: user.pollId,
-            users: getCurrentUser(socket.id),
             poll: getPoll(user.pollId)
         });
     });
-    
+     
     socket.on('disconnect', () => {
         const user = leavePoll(socket.id);
         console.log(socket)
