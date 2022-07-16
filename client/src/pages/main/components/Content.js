@@ -23,7 +23,7 @@ function Content() {
 
   return (
     <main className='bg-[#AF4D98] w-full min-h-screen pt-14 flex justify-center'>
-      <section className='bg-[#9DF7E5] w-4/5 h-fit pt-10 pb-10 shadow-lg rounded-md grid grid-cols-3 justify-center place-items-center gap-y-12'>
+      <section className='bg-[#9DF7E5] w-4/5 h-fit pt-10 pb-10 shadow-lg rounded-md grid grid-cols-3 justify-center place-items-center gap-y-12 pr-10 pl-10'>
         {state.loading ? <></> : state.polls.map(poll => {
           
           return <Poll title={poll.title} pollId={poll._id} createdBy={poll.createdBy} />
