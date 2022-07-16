@@ -35,7 +35,7 @@ const io = new Server(server, {
     } 
 });
 
-io.on('connection', (socket) => {
+io.on('connection', async (socket) => {
     console.log('a user connected');
 
     socket.broadcast.emit('user connected', {
@@ -48,18 +48,17 @@ io.on('connection', (socket) => {
             socket.join(pollId)
             //console.log(pollId)
             //console.log(user.pollId)
+            console.log(userId, pollId)
             socket.emit('message', 'Welcome to poll');
     
             // Broadcast to others when users connects
-            console.log(userId)
             socket.broadcast
                 .to(pollId)
                 .emit('message', `${userId} has joined the poll room.`);
     
             // Send users and poll info
             const p = getPoll(pollId)
-            //console.log(p)
-            console.log(pollId)
+
             io.to(userId).emit('roomUsers', {
                 'user': 'Hi'
             });
@@ -69,8 +68,6 @@ io.on('connection', (socket) => {
 
     });
     // Listen for poll votes
-    
-
     socket.on('vote', (pollId) => {
         const user = vote(pollId);
         io.to(user.pollId).emit('roomUsers', {
