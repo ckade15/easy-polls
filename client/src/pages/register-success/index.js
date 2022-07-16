@@ -6,7 +6,7 @@ const RegisterSuccess = (props) => {
   return (
     <div className="w-full min-h-screen bg-gray-300 ">
         <Header />
-        <div className="w-full bg-gray-300 font-mono flex flex-col justify-center place-items-center">
+        <div className="w-full bg-gray-300 font-mono flex flex-col justify-center place-items-center p-20">
             <h1 className="text-center text-4xl text-red-800 mt-10 font-bold">Thank you for registering!</h1>
             <p className="text-blue-600  text-2xl mt-10 font-bold ">Check your email to confirm account.</p>
         </div>

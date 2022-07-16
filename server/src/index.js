@@ -43,21 +43,26 @@ io.on('connection', (socket) => {
     });
 
     socket.on('joinPoll', ( userId, pollId ) => {
-        
-        const user = joinPoll(userId, pollId)
-        socket.join(user.pollId)
-        socket.emit('message', 'Welcome to poll');
-
-        // Broadcast to others when users connects
-        socket.broadcast
-            .to(user.pollId)
-            .emit('message', `${user.userId} has joined the poll room.`);
-
-        // Send users and poll info
-        const p = getPoll(user.pollId)
-        io.to(user.pollId).emit('roomUsers', {
-            poll: p
-        });
+        try{
+            const user = joinPoll(userId, pollId)
+            socket.join(pollId)
+            //console.log(user.pollId)
+            socket.emit('message', 'Welcome to poll');
+    
+            // Broadcast to others when users connects
+            socket.broadcast
+                .to(user.pollId)
+                .emit('message', `${user.userId} has joined the poll room.`);
+    
+            // Send users and poll info
+            const p = getPoll(user.pollId)
+            console.log(p)
+            io.to(user.pollId).emit('roomUsers', {
+                
+            });
+        }catch(e){
+            console.log(e)
+        }
 
     });
     // Listen for poll votes
@@ -72,7 +77,6 @@ io.on('connection', (socket) => {
      
     socket.on('disconnect', () => {
         const user = leavePoll(socket.id);
-        console.log(socket)
         if (user){
             io.to(user.pollId).emit('message', `${user.id} has left the poll room.`);
             

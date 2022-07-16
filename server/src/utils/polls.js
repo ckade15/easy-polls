@@ -39,7 +39,9 @@ const getPoll = (pollId) => {
 }
 
 const getPollUsers = (pollId) => {
-    return users.filter(user => user.pollId === pollId)
+    return users.filter(user => user.pollId === pollId).lean().then(res => {
+        return res.toJSON();
+    })
 }
 
 

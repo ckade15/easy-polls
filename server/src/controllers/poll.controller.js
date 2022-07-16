@@ -133,7 +133,7 @@ exports.vote = async (req, res, next) => {
                 return res.status(200).json({
                     success: false,
                     message: 'Poll has expired'
-                });
+                }); 
             }
             poll.hasVoted.map((user)=>{
                 if (user._id == userId){

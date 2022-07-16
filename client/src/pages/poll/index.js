@@ -50,6 +50,7 @@ const Poll = (props) => {
             }
             socket.emit('joinPoll', {pollId: state.poll._id, id: state.userId})
             setSocket(socket)
+            console.log(socket)
         }
         /*
         state.socket.on('roomUsers', (poll) => {
