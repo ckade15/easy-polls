@@ -46,19 +46,22 @@ io.on('connection', (socket) => {
         try{
             const user = joinPoll(userId, pollId)
             socket.join(pollId)
+            //console.log(pollId)
             //console.log(user.pollId)
             socket.emit('message', 'Welcome to poll');
     
             // Broadcast to others when users connects
+            console.log(userId)
             socket.broadcast
-                .to(user.pollId)
-                .emit('message', `${user.userId} has joined the poll room.`);
+                .to(pollId)
+                .emit('message', `${userId} has joined the poll room.`);
     
             // Send users and poll info
-            const p = getPoll(user.pollId)
-            console.log(p)
-            io.to(user.pollId).emit('roomUsers', {
-                
+            const p = getPoll(pollId)
+            //console.log(p)
+            console.log(pollId)
+            io.to(userId).emit('roomUsers', {
+                'user': 'Hi'
             });
         }catch(e){
             console.log(e)

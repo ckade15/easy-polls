@@ -32,16 +32,14 @@ const leavePoll = (id) => {
     }
 }
 
-const getPoll = async (pollId) => {
-    const p = await Poll.findOne({pollId: pollId})
+const getPoll = (pollId) => {
+    const p = Poll.findOne({pollId: pollId})
     poll = p 
     return poll;
 }
 
 const getPollUsers = (pollId) => {
-    return users.filter(user => user.pollId === pollId).lean().then(res => {
-        return res.toJSON();
-    })
+    return users.filter(user => user.pollId === pollId)
 }
 
 

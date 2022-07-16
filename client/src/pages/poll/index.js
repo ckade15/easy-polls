@@ -48,10 +48,16 @@ const Poll = (props) => {
                     getIp(res.data.poll)
                 }).catch(e => console.log(e))
             }
-            socket.emit('joinPoll', {pollId: state.poll._id, id: state.userId})
+            socket.emit('joinPoll', state.poll._id, state.userId)
             setSocket(socket)
-            console.log(socket)
+            socket.on('message', (m) => {
+                console.log(m)
+            })
+            socket.on('roomUsers', () => {
+                console.log('hi')
+            })
         }
+
         /*
         state.socket.on('roomUsers', (poll) => {
 
