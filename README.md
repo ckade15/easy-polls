@@ -3,13 +3,13 @@
 Create online polls easily and evaluate the results in real-time! 
 
 ## Technology Stack
-<h2>Client-Side<br></h2>
+<p>Client-Side<br></p>
 
 * ReactJS
 * TailwindCSS
 * Socket.io-client
 
-<h2>Server-Side<br></h2>
+<p>Server-Side<br></p>
 
 * NodeJS
 * ExpressJS
