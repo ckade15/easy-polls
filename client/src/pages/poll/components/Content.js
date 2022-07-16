@@ -22,7 +22,6 @@ const Content = (props) => {
     const mapChoices = () => {
         const choices = props.poll.item.map((item, index) => {
             const handleVote = e => {
-
                 const request = vote(props.poll._id, index, props.userId);
                 request.then(res => {
                     setState({...state, voted: true, show: true})

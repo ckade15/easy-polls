@@ -135,8 +135,10 @@ exports.vote = async (req, res, next) => {
                     message: 'Poll has expired'
                 }); 
             }
+            
             poll.hasVoted.map((user)=>{
-                if (user._id == userId){
+                if (user.id == userId){
+
                     return res.status(200).json({
                         success: false,
                         message: "User has already voted"
@@ -145,7 +147,7 @@ exports.vote = async (req, res, next) => {
             });
             poll.totalVotes = poll.totalVotes+1;
             poll.item[index].votes++;
-            poll.hasVoted.push(userId)
+            poll.hasVoted.push({userId: userId})
 
             poll.save();
             return res.status(200).json({
@@ -160,7 +162,6 @@ exports.vote = async (req, res, next) => {
             });
         }
     }
-
 }
 
 // @route Get api/poll/pollId/:pollId

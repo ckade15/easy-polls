@@ -61,7 +61,7 @@ io.on('connection', async (socket) => {
             const p = getPoll(pollId)
 
             io.to(pollId).emit('roomUsers', {
-
+                poll: p
             });
         }catch(e){
             console.log(e)

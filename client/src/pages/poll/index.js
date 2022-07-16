@@ -56,7 +56,6 @@ const Poll = (props) => {
             })
             socket?.on('user connected', m => console.log(m))
             socket?.on('roomUsers', (poll) => {
-                //console.log(poll)
                 setState({
                     ...state,
                     poll: poll
@@ -69,7 +68,7 @@ const Poll = (props) => {
     const getIp = async (poll) => {
         fetch('https://geolocation-db.com/json/')
         .then(response => response.json())
-        .then(data => {setState({...state, userId: data.IPv4, poll: poll, loading: false});console.log(data.IPv4)})
+        .then(data => {setState({...state, userId: data.IPv4, poll: poll, loading: false})})
     }
 
     const alreadyLoggedIn = () => {
