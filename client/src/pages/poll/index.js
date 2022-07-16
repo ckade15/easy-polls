@@ -49,15 +49,19 @@ const Poll = (props) => {
                 }).catch(e => console.log(e))
             }
         }else{
-            socket.emit('joinPoll', state.poll._id, state.userId)
-            /*
-            socket.on('message', (m) => {
+            socket?.emit('joinPoll', state.poll._id, state.userId)
+            
+            socket?.on('message', (m) => {
                 console.log(m)
             })
-            socket.on('user connected', m => console.log(m))
-            socket.on('roomUsers', () => {
-                //console.log('hi')
-            })*/
+            socket?.on('user connected', m => console.log(m))
+            socket?.on('roomUsers', (poll) => {
+                //console.log(poll)
+                setState({
+                    ...state,
+                    poll: poll
+                })
+            })
             
         }
     }, [state.poll, socket]);
@@ -72,7 +76,15 @@ const Poll = (props) => {
         const token = localStorage.getItem('sessionToken');
         try{
             if(context.id.length > 0){
-
+                setContext({
+                    ...context,
+                    id: context.id,
+                    firstName: context.firstName,
+                    lastName: context.lastName,
+                    email: context.email,
+                    sessionToken: context.sessionToken,
+                    signedIn: true
+                });
             }
         }catch{
             try{
