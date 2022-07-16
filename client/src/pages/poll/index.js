@@ -48,17 +48,19 @@ const Poll = (props) => {
                     getIp(res.data.poll)
                 }).catch(e => console.log(e))
             }
+        }else{
             socket.emit('joinPoll', state.poll._id, state.userId)
-            setSocket(socket)
+            /*
             socket.on('message', (m) => {
                 console.log(m)
             })
             socket.on('user connected', m => console.log(m))
             socket.on('roomUsers', () => {
                 //console.log('hi')
-            })
+            })*/
+            
         }
-    }, [state.poll]);
+    }, [state.poll, socket]);
 
     const getIp = async (poll) => {
         fetch('https://geolocation-db.com/json/')
@@ -84,7 +86,7 @@ const Poll = (props) => {
                             email: token.data.email,
                             sessionToken: token.data.sessionToken,
                             signedIn: true
-                        })
+                        });
                     });
                 }
         

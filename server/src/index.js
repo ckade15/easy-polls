@@ -44,6 +44,7 @@ io.on('connection', async (socket) => {
 
     socket.on('joinPoll', ( userId, pollId ) => {
         try{
+            
             const user = joinPoll(userId, pollId)
             socket.join(pollId)
             //console.log(pollId)
@@ -59,8 +60,8 @@ io.on('connection', async (socket) => {
             // Send users and poll info
             const p = getPoll(pollId)
 
-            io.to(userId).emit('roomUsers', {
-                'user': 'Hi'
+            io.to(pollId).emit('roomUsers', {
+
             });
         }catch(e){
             console.log(e)
