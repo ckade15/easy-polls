@@ -32,8 +32,8 @@ const leavePoll = (id) => {
     }
 }
 
-const getPoll = (pollId) => {
-    const p = Poll.findOne({pollId: pollId})
+const getPoll = async (pollId) => {
+    const p = await Poll.findOne({pollId: pollId})
     poll = p 
     return poll;
 }
