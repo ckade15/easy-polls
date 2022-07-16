@@ -5,15 +5,27 @@ const Poll = require("../models/Poll");
 let users = []
 let poll = undefined
 
-const createPoll = async (pollId, sessionToken) => {
-    poll = getPoll(pollId)
-    setTimeout(poll.pollLength, closePoll(pollId));
-}
 const joinPoll = (id, pollId) =>{
     const user = {id, pollId};
-
+    
     users.push(user);
     return user;
+}
+
+const closePoll = async (pollId) => {
+    const poll = await Poll.findOne({_id: pollId});
+    if (poll){
+        poll.pollStatus = false;
+        poll.save();
+        return true;
+    }else{
+        return false;
+    }
+}
+
+const createPoll = async (pollId) => {
+    poll = getPoll(pollId)
+    setTimeout(poll.pollLength, closePoll(pollId));
 }
 
 const vote = (pollId) => {
@@ -31,6 +43,7 @@ const leavePoll = (id) => {
         return users.splice(index, 1)[0];
     }
 }
+
 
 const getPoll = (pollId) => {
     const p = Poll.findOne({pollId: pollId})

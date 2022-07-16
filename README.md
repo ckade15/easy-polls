@@ -27,3 +27,5 @@ Create online polls easily and evaluate the results in real-time!
 6. - [ ] Implement mobile version 
 7. - [ ] Fix NaN from displaying when an item has zero votes
 8. - [ ] Fix socket parameter issues
+9. - [ ] Add option to delete polls
+10. - [ ] Add spinner to components that render data so that page doesn't look as choppy on mount
