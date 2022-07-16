@@ -9,8 +9,8 @@ Create online polls easily and evaluate the results in real-time!
 - Socket.io-client
 
 <h2>Server-Side<br></h2>
-- NodeJS
-- ExpressJS
+-NodeJS
+-ExpressJS
 - Mongoose (MongoDB)
 - Nodemailer
 - Socket.io
