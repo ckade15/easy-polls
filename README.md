@@ -4,16 +4,16 @@ Create online polls easily and evaluate the results in real-time!
 
 ## Technology Stack
 <h2>Client-Side<br></h2>
-* ReactJS
-* TailwindCSS
-* Socket.io-client
+- ReactJS
+- TailwindCSS
+- Socket.io-client
 
 <h2>Server-Side<br></h2>
-* NodeJS
-* ExpressJS
-* Mongoose (MongoDB)
-* Nodemailer
-* Socket.io
+- NodeJS
+- ExpressJS
+- Mongoose (MongoDB)
+- Nodemailer
+- Socket.io
 
   
 ## To-Do
