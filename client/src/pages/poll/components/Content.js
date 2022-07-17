@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import { getIp, vote } from '../utils';
-import socketio from 'socket.io-client';
+import socketio, { io } from 'socket.io-client';
 import { SOCKET_URL } from '../../../setup/auth/config';
 
 const Content = (props) => {
@@ -9,6 +9,8 @@ const Content = (props) => {
         show: false,
         error: '',
     });
+
+    const [socket, setSocket] = useState(null);
 
     const checkVoted = () => {
         props.poll.hasVoted.map(poll => {
@@ -23,6 +25,7 @@ const Content = (props) => {
         const choices = props.poll.item.map((item, index) => {
             const handleVote = e => {
                 const request = vote(props.poll._id, index, props.userId);
+                socket.emit('vote', props.poll._id);
                 request.then(res => {
                     setState({...state, voted: true, show: true})
                 });
@@ -64,9 +67,23 @@ const Content = (props) => {
 
     useEffect(()=> {
         // Connect to socket
-        
-
-    }, [state.userId, state.show, state.voted])
+        if (props.loading){
+            const socket = io(SOCKET_URL);
+        }else{
+            socket?.emit('joinPoll', state.poll._id, state.userId)
+            
+            socket?.on('message', (m) => {
+                console.log(m)
+            })
+            socket?.on('user connected', m => console.log(m))
+            socket?.on('roomUsers', (poll) => {
+                setState({
+                    ...state,
+                    poll: poll
+                })
+            })
+        }
+    }, [state.userId, state.show, state.voted, socket])
 
     return (
         <section className='bg-[#AF4D98] w-full min-h-screen text-center font-mono pt-20'>

@@ -71,6 +71,7 @@ io.on('connection', async (socket) => {
     // Listen for poll votes
     socket.on('vote', (pollId) => {
         const user = vote(pollId);
+        
         io.to(user.pollId).emit('roomUsers', {
             poll: getPoll(user.pollId)
         });

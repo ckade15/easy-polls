@@ -18,15 +18,11 @@ const Poll = (props) => {
         userId: ""
     });
 
-    const [socket, setSocket] = useState(null);
-
-
     let {pollId} = useParams();
 
     useEffect(() => {
         alreadyLoggedIn();
         if (state.loading){
-            const socket = io(SOCKET_URL);
             
             let userId = ''
             const poll = getPoll(pollId);
@@ -49,21 +45,9 @@ const Poll = (props) => {
                 }).catch(e => console.log(e))
             }
         }else{
-            socket?.emit('joinPoll', state.poll._id, state.userId)
-            
-            socket?.on('message', (m) => {
-                console.log(m)
-            })
-            socket?.on('user connected', m => console.log(m))
-            socket?.on('roomUsers', (poll) => {
-                setState({
-                    ...state,
-                    poll: poll
-                })
-            })
             
         }
-    }, [state.poll, socket]);
+    }, [state.poll]);
 
     const getIp = async (poll) => {
         fetch('https://geolocation-db.com/json/')
@@ -112,7 +96,7 @@ const Poll = (props) => {
     return (
         <React.Fragment>
             <Header page="Poll" />
-            <Content poll={state.poll} context={context} loading={state.loading} userId={state.userId} socket={socket} setSocket={setSocket} />
+            <Content poll={state.poll} context={context} loading={state.loading} userId={state.userId}  />
             <Footer />
         </React.Fragment>
     );
