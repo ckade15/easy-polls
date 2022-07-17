@@ -25,7 +25,7 @@ Create online polls easily and evaluate the results in real-time!
 4. - [ ] Fix IP tracking to not generate random ID based off of IP address
 5. - [ ] Implement session tokens based on device
 6. - [ ] Implement mobile version 
-7. - [ ] Fix NaN from displaying when an item has zero votes
+7. - [x] Fix NaN from displaying when an item has zero votes
 8. - [ ] Fix socket parameter issues
 9. - [ ] Add option to delete polls
 10. - [ ] Add spinner to components that render data so that page doesn't look as choppy on mount

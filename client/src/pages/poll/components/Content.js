@@ -45,8 +45,12 @@ const Content = (props) => {
 
     const mapResults = () => {
         const choices = props.poll.item.map((item, index) => {
+            // Handles display percentage
             let percentage = (item.votes / props.poll.totalVotes) * 100;
             percentage = parseFloat(percentage).toFixed(1);
+            if (item.votes === 0){
+                percentage = 0
+            }
             
             return (<a name={index}
                 className='block hover:cursor-pointer mb-8 text-lg bg-[#AF4D98] rounded-md p-4 text-white 
