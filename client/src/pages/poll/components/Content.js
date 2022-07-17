@@ -72,9 +72,8 @@ const Content = (props) => {
     useEffect(()=> {
         // Connect to socket
         if (props.loading){
-            const socket = io.connect(SOCKET_URL);
+            const socket = io(SOCKET_URL);
             console.log(socket)
-            //setSocket(socket)
         }else{
             console.log(socket)
             socket?.emit('joinPoll', state.poll._id, state.userId)
@@ -82,7 +81,7 @@ const Content = (props) => {
             socket?.on('message', (m) => {
                 console.log(m)
             })
-            socket?.on('user connected', m => console.log(m))
+            socket?.on('user connected', () => console.log('connected'))
             socket?.on('roomUsers', (poll) => {
                 setState({
                     ...state,
