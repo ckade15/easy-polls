@@ -77,7 +77,8 @@ const Content = (props) => {
             //console.log(socket)
         }else{
             //console.log(socket)
-            socket?.emit('joinPoll', state.poll._id, state.userId)
+            socket?.emit('joinPoll', state.poll._id, state.userId);
+            socket?.on('m', m => console.log(m))
             
             socket?.on('message', (m) => {
                 console.log(m)

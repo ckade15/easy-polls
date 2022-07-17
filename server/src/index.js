@@ -37,18 +37,19 @@ const io = new Server(server, {
 
 io.on('connection', async (socket) => {
     console.log('a user connected');
+    socket.emit('m', 'Message')
 
     socket.broadcast.emit('user connected', {
         userId: socket.id
     });
 
     socket.on('joinPoll', ( userId, pollId ) => {
+        console.log('join attempt')
         try{
             
             const user = joinPoll(userId, pollId)
             socket.join(pollId)
-            //console.log(pollId)
-            //console.log(user.pollId)
+
             console.log(userId, pollId)
             socket.emit('message', 'Welcome to poll');
     
@@ -66,7 +67,6 @@ io.on('connection', async (socket) => {
         }catch(e){
             console.log(e)
         }
-
     });
     // Listen for poll votes
     socket.on('vote', (pollId) => {
@@ -112,5 +112,5 @@ app.get('/', (req, res) => {
 
 const PORT = process.env.PORT || 5001;
 
-server.listen(PORT, () => console.log(``))
+server.listen(PORT, () => console.log(`Server listening on port ${PORT}`)); 
 //app.listen(PORT, console.log(`\nServer listening on port ${PORT}`));
