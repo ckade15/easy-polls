@@ -88,8 +88,7 @@ io.on('connection', async (socket) => {
                 users: getPollUsers(user.pollId)
             })
 
-        }
-        
+        }  
         console.log('user disconnected');
     });
 

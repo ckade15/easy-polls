@@ -16,7 +16,7 @@ const Content = (props) => {
         props.poll.hasVoted.map(poll => {
             if (poll._id == props.userId){
                 console.log('has voted')
-                setState({...state, voted: true})
+                setState({...state, voted: true, show: true})
             }
         })
     }
@@ -73,11 +73,11 @@ const Content = (props) => {
     useEffect(()=> {
         // Connect to socket
         if (props.loading){
-            const socket = io(SOCKET_URL);
+            const socket = io(SOCKET_URL)
             //console.log(socket)
         }else{
             //console.log(socket)
-            //socket?.emit('joinPoll', state.poll._id, state.userId)
+            socket?.emit('joinPoll', state.poll._id, state.userId)
             
             socket?.on('message', (m) => {
                 console.log(m)
