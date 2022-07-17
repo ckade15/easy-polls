@@ -25,9 +25,10 @@ const Content = (props) => {
         const choices = props.poll.item.map((item, index) => {
             const handleVote = e => {
                 const request = vote(props.poll._id, index, props.userId);
-                socket.emit('vote', props.poll._id);
                 request.then(res => {
-                    setState({...state, voted: true, show: true})
+                    setState({...state, voted: true, show: true});
+                    socket.emit('vote', props.poll._id);
+                    
                 });
                 request.catch(e => console.log(e))
             }
@@ -73,10 +74,10 @@ const Content = (props) => {
         // Connect to socket
         if (props.loading){
             const socket = io(SOCKET_URL);
-            console.log(socket)
+            //console.log(socket)
         }else{
-            console.log(socket)
-            socket?.emit('joinPoll', state.poll._id, state.userId)
+            //console.log(socket)
+            //socket?.emit('joinPoll', state.poll._id, state.userId)
             
             socket?.on('message', (m) => {
                 console.log(m)
