@@ -23,6 +23,7 @@ const Poll = (props) => {
     useEffect(() => {
         alreadyLoggedIn();
         if (state.loading){
+            const socket = io(SOCKET_URL);
             
             let userId = ''
             const poll = getPoll(pollId);
@@ -44,9 +45,8 @@ const Poll = (props) => {
                     getIp(res.data.poll)
                 }).catch(e => console.log(e))
             }
-        }else{
-            
         }
+        
     }, [state.poll]);
 
     const getIp = async (poll) => {
