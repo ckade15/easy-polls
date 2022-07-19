@@ -98,6 +98,8 @@ const Content = (props) => {
             <div className='w-1/2 min-w-[500px] bg-[#9DF7E5] ml-auto mr-auto rounded-md p-10 flex-col justify-center place-items-center pb-20 pt-20'>
                 <p className='text-2xl'>Poll created by {props.poll.createdBy}</p>
                 <p className='text-2xl mt-4 mb-8'>Poll Title: {props.poll.title}</p>
+
+                {props.loading ? <></> : <div className='spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full' role='status'></div>}
                 {props.poll.pollStatus || state.voted ? 
                     <>{state.show ? 
                         <React.Fragment>
@@ -109,6 +111,7 @@ const Content = (props) => {
                         <React.Fragment>
                             {props.loading ? <></> : mapChoices()}
                             <div className='mb-10'/>
+                            
                             <a className='text-lg p-4 bg-[#F4E4BA] rounded-md hover:shadow-md hover:cursor-pointer hover:bg-gray-300 hover:text-blue-800' onClick={e => handleResults(e)}>Show Results</a>
                         </React.Fragment>
                         }
