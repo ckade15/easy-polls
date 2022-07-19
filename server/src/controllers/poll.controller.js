@@ -8,7 +8,7 @@ const jwt = require('jsonwebtoken');
 // @access Public
 exports.createPoll = async (req, res, next) => {
     let errors = []
-    const {sessionToken, title, userId, item, pollLength, createdBy} = req.body;
+    let {sessionToken, title, userId, item, pollLength, createdBy} = req.body;
     // Convert poll length from hours to seconds
     pollLength = ( pollLength * 60 ) * 60
 
@@ -54,6 +54,7 @@ exports.createPoll = async (req, res, next) => {
                     pollStatus: true,
                     createdAt: new Date(),
                     totalVotes: 0,
+                    expireAfterSeconds: pollLength
                 });
                 
                 
