@@ -29,3 +29,4 @@ Create online polls easily and evaluate the results in real-time!
 8. - [ ] Fix socket parameter issues
 9. - [ ] Add option to delete polls
 10. - [x] Add spinner to components that render data so that page doesn't look as choppy on mount
+11. - [ ] Fix poll to actually deactivate status when poll is supposed to end
