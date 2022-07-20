@@ -94,7 +94,7 @@ const Content = (props) => {
     }, [state.userId, state.show, state.voted, socket])
 
     return (
-        <section className='bg-[#AF4D98] w-full min-h-screen text-center font-mono pt-20 '>
+        <section className='bg-[#AF4D98] w-full min-h-screen text-center font-mono pt-20 pb-20'>
             <div className='w-1/2 min-w-[500px] bg-[#9DF7E5] ml-auto mr-auto rounded-md p-10 flex-col justify-center place-items-center pb-20 pt-20'>
 
                 {props.loading ? <>

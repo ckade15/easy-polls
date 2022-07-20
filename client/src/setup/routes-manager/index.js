@@ -32,6 +32,7 @@ const RoutesManager = () => {
                     <Route path='/pageNotFound' element={<PageNotFound />} />
                     <Route path='/register/success' element={<RegisterSuccess />} />
                     <Route path='/profile' element={<Profile />} />
+                    <Route path='*' element={<PageNotFound />} />
                 </Routes>
             </BrowserRouter>
         </UserProvider>

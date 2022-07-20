@@ -21,7 +21,7 @@ Create online polls easily and evaluate the results in real-time!
 ## To-Do
 1. - [x] Fix create poll endpoint
 2. - [x] Add ability to search for polls on home page
-3. - [x] Add IP address tracking to limit voting multiple times
+3. - [ ] Add IP address tracking to limit voting multiple times
 4. - [ ] Fix IP tracking to not generate random ID based off of IP address
 5. - [ ] Implement session tokens based on device
 6. - [ ] Implement mobile version 

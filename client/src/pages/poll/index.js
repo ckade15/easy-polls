@@ -20,10 +20,10 @@ const Poll = (props) => {
 
     let {pollId} = useParams();
 
+
     useEffect(() => {
         alreadyLoggedIn();
         if (state.loading){
-            const socket = io(SOCKET_URL);
             
             let userId = ''
             const poll = getPoll(pollId);
