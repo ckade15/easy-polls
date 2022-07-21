@@ -72,16 +72,20 @@ io.on('connection', async (socket) => {
         const user = vote(pollId);
         //console.log(pollId)
         console.log('Vote attempt')
-        let pl = undefined
         const p = getPoll(pollId)
-        p.then(poll => pl = poll)
-        try{
-            io.to(user.pollId).emit('roomUsers', {
-                poll: pl
-            });
-        }catch{
-            console.log('MongoDB document too big')
-        }
+        p.then(poll => {
+                const pa = {
+                    id: poll._id,
+                    createdBy: poll.createdBy,
+
+                }
+                io.to(pollId).emit('roomUsers', {
+                    poll: pa
+                });
+
+            
+        })
+
     });
      
     socket.on('disconnect', () => {

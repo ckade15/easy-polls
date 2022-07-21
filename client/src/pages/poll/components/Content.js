@@ -78,8 +78,7 @@ const Content = (props) => {
         if (props.loading){
             setState({...state, poll: props.poll})
             socket?.emit('joinPoll', props.poll._id, props.userId);
-            //setSocket(sock)
-            //console.log(socket)
+
         }else{
             setSocket(sock)
 
@@ -89,8 +88,8 @@ const Content = (props) => {
             
             socket?.on('roomUsers', (poll) => {
                 console.log(poll)
-                setState({
-                    ...state,
+                props.setParent({
+                    ...props.parentState,
                     poll: poll
                 })
             })
