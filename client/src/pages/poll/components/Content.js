@@ -72,18 +72,20 @@ const Content = (props) => {
 
     useEffect(()=> {
         // Connect to socket
+        const socket = io(SOCKET_URL);
+        
         if (props.loading){
-            const socket = io(SOCKET_URL)
             //console.log(socket)
         }else{
+            setSocket(socket)
             //console.log(socket)
             socket?.emit('joinPoll', state.poll._id, state.userId);
             socket?.on('m', m => console.log(m))
             
             socket?.on('message', (m) => {
                 console.log(m)
-            })
-            socket?.on('user connected', () => console.log('connected'))
+            });
+            socket?.on('user connected', () => console.log('connected'));
             socket?.on('roomUsers', (poll) => {
                 setState({
                     ...state,
@@ -131,7 +133,6 @@ const Content = (props) => {
                     <div className='mb-10' />
                     </React.Fragment>
                 }
-                {checkVoted}
                 </>
                 
                 }
