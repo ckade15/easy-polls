@@ -7,8 +7,7 @@ const path = require('path')
 const { Server } = require('socket.io');
 const cors = require('cors');
 const connectDB = require('./config/db');
-const { joinPoll, leavePoll, getCurrentUser, getPollUsers } = require('./utils/polls');
-const { getPoll } = require('./utils/polls');
+const { joinPoll, leavePoll, getCurrentUser, getPollUsers, vote, getPoll } = require('./utils/polls');
 
 // DOTENV Config
 require('dotenv').config({ path: path.resolve(__dirname, '../.env') })
@@ -50,7 +49,7 @@ io.on('connection', async (socket) => {
             const user = joinPoll(userId, pollId)
             socket.join(pollId)
 
-            console.log(userId, pollId)
+            //console.log(userId, pollId)
             socket.emit('message', 'Welcome to poll');
     
             // Broadcast to others when users connects
@@ -71,10 +70,18 @@ io.on('connection', async (socket) => {
     // Listen for poll votes
     socket.on('vote', (pollId) => {
         const user = vote(pollId);
-        
-        io.to(user.pollId).emit('roomUsers', {
-            poll: getPoll(user.pollId)
-        });
+        //console.log(pollId)
+        console.log('Vote attempt')
+        let pl = undefined
+        const p = getPoll(pollId)
+        p.then(poll => pl = poll)
+        try{
+            io.to(user.pollId).emit('roomUsers', {
+                poll: pl
+            });
+        }catch{
+            console.log('MongoDB document too big')
+        }
     });
      
     socket.on('disconnect', () => {

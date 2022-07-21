@@ -45,10 +45,13 @@ const leavePoll = (id) => {
 }
 
 
-const getPoll = (pollId) => {
-    const p = Poll.findOne({pollId: pollId})
-    poll = p 
-    return poll;
+const getPoll = async (pollId) => {
+
+    const p = await Poll.findById(pollId).then(pl => {
+        poll = pl
+    })
+    //console.log(pl)
+    return poll
 }
 
 const getPollUsers = (pollId) => {
