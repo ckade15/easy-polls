@@ -77,18 +77,16 @@ const Content = (props) => {
         const sock = io(SOCKET_URL);
         if (props.loading){
             setState({...state, poll: props.poll})
+            socket?.emit('joinPoll', props.poll._id, props.userId);
             //setSocket(sock)
             //console.log(socket)
         }else{
             setSocket(sock)
-            //console.log(socket)
 
-            socket?.emit('joinPoll', state.poll._id, state.userId);
-            
             socket?.on('message', (m) => {
                 console.log(m)
             });
-            socket?.on('user connected', () => console.log('connected'));
+            
             socket?.on('roomUsers', (poll) => {
                 console.log(poll)
                 setState({
