@@ -46,8 +46,8 @@ const PageNotFound = (props) => {
             <Header />
             <section className="bg-[#AF4D98] w-full min-h-screen text-center font-mono pt-20 font-mono ">
                 <div className="w-2/3 ml-auto mr-auto mt-10 p-20 bg-[#9DF7E5] rounded-md shadow-xl">
-                    <p className="text-xl">Uh oh... 404 Error</p>
-                    <p className="mt-4 text-lg mb-10">The page you are looking for does not exist.</p>
+                    <p className="text-4xl font-bold">Uh oh... 404 Error</p>
+                    <p className="mt-4 text-xl mb-10">The page you are looking for does not exist.</p>
                     <a href="/" className="bg-[#F4E4BA] font-bold p-4 rounded-md text-xl text-gray-500 hover:shadow-lg hover:text-[#F4E4BA] hover:bg-[#AF4D98] ">Go back home</a>
 
                 </div>
