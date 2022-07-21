@@ -5,6 +5,5 @@ import { Navigate } from "react-router-dom";
 const logout = () => {
     localStorage.removeItem('sessionToken');
 
-    return <Navigate to="/" replace />
 }
 export default logout;
