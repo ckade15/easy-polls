@@ -37,7 +37,7 @@ const io = new Server(server, {
 
 io.on('connection', async (socket) => {
     console.log('a user connected');
-    socket.emit('m', 'Message')
+    socket.emit('m', 'Message to client')
 
     socket.broadcast.emit('user connected', {
         userId: socket.id
