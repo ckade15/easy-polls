@@ -285,9 +285,13 @@ exports.deletePoll = async (req, res, next) => {
                         message: 'Invalid session token'
                     });
                 }
+
                 if (valid){
+
+                    /*
                     const dele = async (id) => {
                         const p = await Poll.findByIdAndDelete(id)
+                        console.log(p)
                         p.save()
                         return p;
                     }
@@ -309,16 +313,24 @@ exports.deletePoll = async (req, res, next) => {
                             success: false,
                             message: 'Poll not deleted'
                         })
-                    });
+                    });*/
                     
                 }
             });
+            const poll = await Poll.findOne({id: pollId})
+            
+            await poll.remove();
+            
+            return res.status(200).json({
+                success: true,
+                message: 'Poll deleted successfully'
+            });
+            
+
+            
+
         }
 
-        return res.status(200).json({
-            success: true,
-            message: 'Poll deleted successfully'
-        });
     }
 
 }
