@@ -139,8 +139,7 @@ exports.vote = async (req, res, next) => {
             }
             
             poll.hasVoted.map((user)=>{
-                if (user.id == userId){
-
+                if (user.userVoterId == userId){
                     return res.status(200).json({
                         success: false,
                         message: "User has already voted"
@@ -149,7 +148,7 @@ exports.vote = async (req, res, next) => {
             });
             poll.totalVotes = poll.totalVotes+1;
             poll.item[index].votes++;
-            poll.hasVoted.push({userId: userId})
+            poll.hasVoted.push({userVoterId: userId})
 
             poll.save();
             return res.status(200).json({
