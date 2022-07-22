@@ -11,6 +11,7 @@ const ProfilePoll = (props) => {
     });
 
     const handleDelete = (e, pollId) => {
+        e.preventDefault()
         const sub = window.confirm(`Are you sure you would like to delete poll ID ${pollId}?`);
         if (sub){
             console.log(props.sessionToken)
@@ -23,6 +24,7 @@ const ProfilePoll = (props) => {
                 }
             })
         }
+        
     }
     
     useEffect(() => {

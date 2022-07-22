@@ -140,11 +140,11 @@ exports.vote = async (req, res, next) => {
             
             poll.hasVoted.map((user)=>{
                 if (user.userVoterId == userId){
-                    
+                    /*
                     return res.status(200).json({
                         success: false,
                         message: "User has already voted"
-                    })
+                    })*/
                 }
             });
 
@@ -286,36 +286,6 @@ exports.deletePoll = async (req, res, next) => {
                     });
                 }
 
-                if (valid){
-
-                    /*
-                    const dele = async (id) => {
-                        const p = await Poll.findByIdAndDelete(id)
-                        console.log(p)
-                        p.save()
-                        return p;
-                    }
-
-                    dele(pollId).then(poll => {
-                        if (!poll){
-                            return res.status(200).json({
-                                success: false,
-                                message: 'Poll not found'
-                            })
-                        }else{
-                            return res.status(200).json({
-                                success: true,
-                                message: 'Poll deleted successfully'
-                            })
-                        }
-                    }).catch(() => {
-                        return res.status(200).json({
-                            success: false,
-                            message: 'Poll not deleted'
-                        })
-                    });*/
-                    
-                }
             });
             try{
                 const poll = await Poll.findOne({_id: pollId})

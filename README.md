@@ -26,9 +26,10 @@ Create online polls easily and evaluate the results in real-time!
 5. - [x] Fix NaN from displaying when an item has zero votes
 6. - [x] Fix socket parameter issues
 7.  - [x] Add spinner to components that render data so that page doesn't look as choppy on mount
-8.  - [ ] Fix poll to actually deactivate status when poll is supposed to end
-9.  - [ ] Fix poll page wrongly detecting whether or not the user voted
-10. - [ ] Implement mobile version 
-11. - [ ] Add option to delete polls
+8.  - [x] Add option to delete polls
+9.  - [ ] Fix poll to actually deactivate status when poll is supposed to end
+10. - [ ] Fix poll page wrongly detecting whether or not the user voted
+11. - [ ] Implement mobile version 
 12. - [ ] Refactor refresh token method with nodemailer to correctly generate new token
 13. - [ ] Implement session tokens based on device
+

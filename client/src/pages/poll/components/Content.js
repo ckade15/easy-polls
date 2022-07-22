@@ -148,7 +148,7 @@ const Content = (props) => {
                 {props.loading ? <Spinner /> : <>
                 <p className='text-2xl'>Poll created by {props.poll.createdBy}</p>
                 <p className='text-2xl mt-4 mb-8'>Poll Title: {props.poll.title}</p>
-                {props.poll.pollStatus && state.voted !== true ? 
+                {props.poll.pollStatus ? 
                     <>{state.show ? 
                         <React.Fragment>
                             {state.poll !== undefined ? mapStateResults() : mapResults()}
