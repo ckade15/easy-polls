@@ -57,7 +57,7 @@ const Profile = (props) => {
             <Header page="Profile" />
             {context.loggedIn ? <Navigate to='/login' /> : <></>}
             <Content first={context.firstName} last={context.lastName} email={context.email} loading={state.loading}/>
-            <Poll loading={state.loading} userId={context._id} />
+            <Poll loading={state.loading} userId={context._id} sessionToken={context.sessionToken} />
             <Footer />
         </React.Fragment>
     );

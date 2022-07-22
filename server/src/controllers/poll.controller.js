@@ -255,12 +255,13 @@ exports.closePoll = async (req, res, next) => {
 }
 
 // @route Delete api/poll/delete/:pollId
-// @desc Sign in user
+// @desc Delete poll
 // @params pollId, sessionToken
-// @access Public
+// @access Private
 exports.deletePoll = async (req, res, next) => {
     let errors = []
-    const {pollId, sessionToken} = req.params;
+    const {pollId} = req.params;
+    const {sessionToken} = req.body;
 
     if (pollId === undefined || pollId === null || pollId === ''){
         errors.push('Poll id is required');
@@ -269,7 +270,7 @@ exports.deletePoll = async (req, res, next) => {
         errors.push('Session token is required');
     }
 
-    if (errors){
+    if (errors.length > 0){
         return res.status(200).json({
             success: false,
             error: errors
@@ -277,7 +278,7 @@ exports.deletePoll = async (req, res, next) => {
     }else{
         const validToken = await User.findOne({sessionToken: sessionToken});
         if (validToken) {
-            jwt.verify(sessionToken, validUser.sessionToken, (valid, err) => {
+            jwt.verify(sessionToken, validToken.sessionToken, (valid, err) => {
                 if (err) {
                     return res.status(200).json({
                         success: false,
@@ -285,17 +286,20 @@ exports.deletePoll = async (req, res, next) => {
                     });
                 }
                 if (valid){
-                    const poll = Poll.findOne({_id: pollId});
-                    if (poll){
-                        poll.remove();
-                        return res.status(200).json({
-                            success: true,
-                            message: 'Poll deleted successfully'});
-                    }else{
-                        return res.status(200).json({
-                            success: false,
-                            message: 'Poll not found'})
+                    const dele = async (id) => {
+                        const p = await Poll.findById(id);
+                        if (!p){
+                            return res.status(200).json({
+                                success: false, 
+                                message: 'Poll not found'
+                            })
+                        }
+                        await p.remove();
+                        return p;
                     }
+
+                    dele(pollId);
+                    
                 }
             });
         }

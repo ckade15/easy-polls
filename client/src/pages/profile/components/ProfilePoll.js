@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-import getUserPolls from '../utils'
+import {getUserPolls, deletePoll} from '../utils'
 import UserContext from '../../../setup/app-context-manager';
 import axios from 'axios';
 
@@ -10,20 +10,26 @@ const ProfilePoll = (props) => {
         polls: undefined
     });
 
-    const handleDelete = () => {
-        
+    const handleDelete = (e, pollId) => {
+        const sub = window.confirm(`Are you sure you would like to delete poll ID ${pollId}?`);
+        if (sub){
+            console.log(props.sessionToken)
+            const deleteP = deletePoll(pollId, props.sessionToken);
+            const newState = state.polls.filter(poll => {
+                if (poll._id === pollId){
+
+                }else{
+                    return poll;
+                }
+            })
+        }
     }
     
     useEffect(() => {
         if (props.loading){
             
         }else{
-            console.log(context.id)
-            //const userPolls = getUserPolls(context.id);
-            /*
-            userPolls.then(polls => {
-                //setState({polls: polls})
-            })*/
+            
             const URL = 'http://localhost:5001/api/poll/get/' + context.id;
             const userPolls = axios.get(URL)
             userPolls.then(response => {
@@ -48,8 +54,11 @@ const ProfilePoll = (props) => {
                               <p className='text-xl'>Poll title: {poll.title}</p>
                               <p className='mt-4 mb-8 text-lg'>Creator: {poll.createdBy}</p>
                               
-                              <a className='block mb-4 text-lg bg-[#F4E4BA] font-bold p-4 w-[170px] ml-auto mr-auto rounded-md text-gray-500 hover:shadow-lg hover:text-[#F4E4BA] hover:bg-[#AF4D98] hover:cursor-pointer '>Delete Poll</a>
-                              <a href={URL} className='block text-lg bg-[#F4E4BA] mr-auto ml-auto font-bold p-4 w-[170px] rounded-md text-gray-500 hover:shadow-lg hover:text-[#F4E4BA] hover:bg-[#AF4D98] '>View Poll</a>
+                              <a onClick={e => handleDelete(e, poll._id)} 
+                                    className='block mb-4 text-lg bg-[#F4E4BA] font-bold p-4 w-[170px] ml-auto mr-auto rounded-md text-gray-500 hover:shadow-lg hover:text-[#F4E4BA] 
+                                    hover:bg-[#AF4D98] hover:cursor-pointer '>Delete Poll</a>
+                              <a href={URL} className='block text-lg bg-[#F4E4BA] mr-auto ml-auto font-bold p-4 w-[170px] 
+                                rounded-md text-gray-500 hover:shadow-lg hover:text-[#F4E4BA] hover:bg-[#AF4D98] '>View Poll</a>
                               
                             </div>
                         )    

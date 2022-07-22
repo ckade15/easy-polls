@@ -29,6 +29,13 @@ const getUserPolls = async (userId) => {
     return response;
 }
 
-const utils = {confirm, updatePassword, getUserPolls};
+const DELETE_ROUTE = 'http://localhost:5001/api/poll/delete'
+export const deletePoll = (pollId, sessionToken) => {
+    const URL = DELETE_ROUTE + `/${pollId}`
+    const request = axios.delete(URL, {data:{sessionToken: sessionToken}});
+    return request;
+}
+
+const utils = {confirm, updatePassword, getUserPolls, deletePoll};
 
 export default utils;
