@@ -41,11 +41,12 @@ const ProfilePoll = (props) => {
             })
         }
         console.log(props)
-    }, [props.loading, context.id])
+    }, [props.loading, context.id, state.polls?.length])
 
     return (
         <main className='bg-[#AF4D98] w-full min-h-screen pt-14 flex justify-center'>
-            {state.polls !== undefined ? 
+            {state.polls !== undefined && state.polls?.length > 0 ?
+                
                 <section className='bg-[#9DF7E5] w-4/5 h-fit pt-10 pb-10 shadow-lg rounded-md grid grid-cols-3 justify-center place-items-center gap-y-12 pr-10 pl-10 gap-x-4 mb-10'>
                     {state.polls.map(poll => {
                         const URL = 'http://localhost:3000/poll/' + poll._id;

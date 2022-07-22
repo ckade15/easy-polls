@@ -317,14 +317,22 @@ exports.deletePoll = async (req, res, next) => {
                     
                 }
             });
-            const poll = await Poll.findOne({id: pollId})
+            try{
+                const poll = await Poll.findOne({_id: pollId})
+                
+                await poll.remove();
+    
+                return res.status(200).json({
+                    success: true,
+                    message: 'Poll deleted successfully'
+                });
+            }catch{
+                return res.status(200).json({
+                    success: false,
+                    message: 'Poll does not exist'
+                })
+            }
             
-            await poll.remove();
-            
-            return res.status(200).json({
-                success: true,
-                message: 'Poll deleted successfully'
-            });
             
 
             
