@@ -23,7 +23,3 @@ export const getIp = async () => {
     console.log(res.data.IPv4)
     return res.data.ip;
 }
-
-export const checkVoted = () => {
-
-}

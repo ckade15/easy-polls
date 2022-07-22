@@ -33,6 +33,21 @@ const vote = (pollId) => {
     return poll;
 }
 
+const checkVoted = async (pollId, userId) => {
+    const poll = await Poll.findOne({_id: pollId});
+
+    if (poll){
+        poll.hasVoted.map((user)=>{
+            if (user.userVoterId == userId){
+                
+                return true;
+                
+            }
+        });
+        return false;
+    }
+}
+
 const getCurrentUser = (id) => {
     return users.find(user => user.id === id)
 }
@@ -63,6 +78,7 @@ module.exports = {
     joinPoll,
     createPoll,
     vote,
+    checkVoted,
     getCurrentUser,
     leavePoll,
     getPollUsers,

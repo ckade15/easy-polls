@@ -7,7 +7,7 @@ const path = require('path')
 const { Server } = require('socket.io');
 const cors = require('cors');
 const connectDB = require('./config/db');
-const { joinPoll, leavePoll, getCurrentUser, getPollUsers, vote, getPoll } = require('./utils/polls');
+const { joinPoll, leavePoll, getCurrentUser, getPollUsers, vote, getPoll, checkVoted } = require('./utils/polls');
 
 // DOTENV Config
 require('dotenv').config({ path: path.resolve(__dirname, '../.env') })
@@ -60,11 +60,22 @@ io.on('connection', async (socket) => {
     
             // Send users and poll info
             const p = getPoll(pollId)
-            //console.log(pollId)
+            const voted = checkVoted(pollId, userId);
+
+
             p.then(poll => {
-                io.to(pollId).emit('join', {
-                    poll: poll
-                })
+                if (voted){
+                    io.to(pollId).emit('join', {
+                        poll: poll,
+                        voted: true
+                    })
+                }else{
+                    io.to(pollId).emit('join', {
+                        poll: poll,
+                        voted: false
+                    })
+
+                }
             })
 
             
@@ -82,8 +93,17 @@ io.on('connection', async (socket) => {
 
             io.emit('roomUsers', {poll: poll});            
         })
- 
     });
+
+    // Check if user voted
+    socket.on('checkVoted', (pollId, userId) => {
+        const voted = checkVoted(pollId, userId);
+        if (voted){
+            io.emit('voteStatus', true)
+        }else{
+            io.emit('voteStatus', false)
+        }
+    })
      
     socket.on('disconnect', () => {
         const user = leavePoll(socket.id);
