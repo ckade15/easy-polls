@@ -83,10 +83,11 @@ io.on('connection', async (socket) => {
                 }*/
                 io.emit('roomUsers', {
                     poll: poll
-                })
+                });
+                /*
                 io.to(pollId).emit('roomUsers', {
                     poll: poll
-                });
+                });*/
 
             
         })

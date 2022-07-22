@@ -125,7 +125,7 @@ const Content = (props) => {
             console.log(m)
         });
         
-        socket?.on('roomUsers', (poll) => {
+        socket?.on('roomUsers', poll => {
             console.log(poll)
             setState({
                 ...state,
