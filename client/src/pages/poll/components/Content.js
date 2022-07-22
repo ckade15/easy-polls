@@ -116,31 +116,27 @@ const Content = (props) => {
 
     useEffect(()=> {
         // Connect to socket
-        
         const sock = io(SOCKET_URL);
-        if (props.loading){
-            setState({...state, poll: props.poll})
-            socket?.emit('joinPoll', props.poll._id, props.userId);
-
-        }else{
-            setSocket(sock)
-
-            socket?.on('message', (m) => {
-                console.log(m)
-            });
-            
-            socket?.on('roomUsers', (poll) => {
-                console.log(poll)
-                setState({
-                    ...state,
-                    poll: poll.poll
-                })
+        setState({...state, poll: props.poll})
+        socket?.emit('joinPoll', props.poll._id, props.userId);
+       
+        setSocket(sock)
+        socket?.on('message', (m) => {
+            console.log(m)
+        });
+        
+        socket?.on('roomUsers', (poll) => {
+            console.log(poll)
+            setState({
+                ...state,
+                poll: poll.poll
             })
-        }
+        })
+
         return () => {
             
         }
-    }, [state.userId, state.show, props.loading, state.poll])
+    }, [])
 
     return (
         <section className='bg-[#AF4D98] w-full min-h-screen text-center font-mono pt-20 pb-20'>
