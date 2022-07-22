@@ -14,6 +14,8 @@ const Content = (props) => {
 
     const [socket, setSocket] = useState();
 
+    const [poll, setPoll] = useState();
+
     const checkVoted = () => {
         props.poll.hasVoted.map(poll => {
             if (poll._id == props.userId){
@@ -28,6 +30,7 @@ const Content = (props) => {
             const handleVote = e => {
                 const request = vote(props.poll._id, index, props.userId);
                 request.then(res => {
+                    //setPoll(props.poll)
                     setState({poll: props.poll, voted: true, show: true});
                     socket.emit('vote', props.poll._id);
                     
@@ -51,7 +54,8 @@ const Content = (props) => {
             const handleVote = e => {
                 const request = vote(state.poll._id, index, state.userId);
                 request.then(res => {
-                    //setState({poll: state.poll, voted: true, show: true});
+                    //setPoll(props.poll)
+                    setState({poll: state.poll, voted: true, show: true});
                     socket.emit('vote', state.poll._id);
                     
                 });
@@ -69,7 +73,7 @@ const Content = (props) => {
     }
 
     const mapStateResults = () => {
-        const choices = state.poll.item.map((item, index) => {
+        const choices = poll.item.map((item, index) => {
             // Handles display percentage
             let percentage = (item.votes / state.poll.totalVotes) * 100;
             percentage = parseFloat(percentage).toFixed(1);
@@ -114,13 +118,9 @@ const Content = (props) => {
         })
     }
 
-    const stateCallback = useCallback(
-        poll => setState({
-            ...state,
-            show: true,
-            poll: poll
-        }), [setState]
-    )
+    const showRes = useCallback(() => {
+        return ;
+    }, [])
 
     useEffect(()=> {
         // Connect to socket
@@ -131,6 +131,7 @@ const Content = (props) => {
             sock?.emit('joinPoll', props.poll._id, props.userId);
         }
         setState({...state, poll: props.poll})
+        
         console.log('Props: ',props)
        
         
@@ -148,8 +149,13 @@ const Content = (props) => {
         
         sock?.on('roomUsers', poll => {
             console.log(poll)
-            stateCallback(poll.poll)
-        })
+            setState({
+                ...state, 
+                show: true,
+                poll: poll.poll
+            });
+        });
+
         setSocket(sock);
          
         console.log(state.poll)
@@ -157,7 +163,7 @@ const Content = (props) => {
             socket?.emit('disconnect', props.userId)
 
         }
-    }, [props.loading])
+    }, [props.loading, showRes])
 
     return (
         <section className='bg-[#AF4D98] w-full min-h-screen text-center font-mono pt-20 pb-20'>
