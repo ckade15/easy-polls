@@ -64,12 +64,16 @@ io.on('connection', async (socket) => {
 
 
             p.then(poll => {
-                if (voted){
+                console.log()
+            
+                if (voted === true){
+                    console.log('voted already')
                     io.to(pollId).emit('join', {
                         poll: poll,
                         voted: true
                     })
                 }else{
+                    console.log('didnt vote')
                     io.to(pollId).emit('join', {
                         poll: poll,
                         voted: false

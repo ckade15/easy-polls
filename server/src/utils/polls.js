@@ -35,17 +35,27 @@ const vote = (pollId) => {
 
 const checkVoted = async (pollId, userId) => {
     const poll = await Poll.findOne({_id: pollId});
-
+    let voted = false
     if (poll){
-        poll.hasVoted.map((user)=>{
-            if (user.userVoterId == userId){
-                
-                return true;
-                
+        try{
+            if (poll.hasVoted === []){
+                voted = false
             }
-        });
-        return false;
+            poll.hasVoted.map((user)=>{
+                if (user.userVoterId == userId){
+                    console.log('hi')
+                    voted = true
+                    
+                }
+            });
+
+        }catch{
+            voted = false
+        }
+        
     }
+    console.log(voted)
+    return voted
 }
 
 const getCurrentUser = (id) => {

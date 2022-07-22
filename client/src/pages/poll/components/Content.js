@@ -114,10 +114,10 @@ const Content = (props) => {
         })
 
         sock?.on('join', poll => {
-            console.log(poll)
+            //console.log(poll)
             setState({
                 ...state,
-                voted: true,
+                voted: poll.voted,
                 poll: poll.poll
             })
         })
@@ -139,7 +139,7 @@ const Content = (props) => {
             
 
         }
-    }, [props.loading, state.voted])
+    }, [props.loading])
 
     return (
         <section className='bg-[#AF4D98] w-full min-h-screen text-center font-mono pt-20 pb-20'>
