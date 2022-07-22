@@ -152,11 +152,11 @@ const Content = (props) => {
         })
         setSocket(sock);
          
-        /*
+        console.log(state.poll)
         return () => {
             socket?.emit('disconnect', props.userId)
-            state.poll.item.votes
-        }*/
+
+        }
     }, [props.loading])
 
     return (
@@ -169,13 +169,13 @@ const Content = (props) => {
                 {props.poll.pollStatus || state.voted ? 
                     <>{state.show ? 
                         <React.Fragment>
-                            {props.loading ? <></> : state.poll === undefined ? mapStateResults() : mapResults()}
+                            {props.loading ? <></> : (state.poll === undefined ? mapStateResults() : mapResults())}
                             <div className='mb-10' />
                             <a className='text-lg p-4 bg-[#F4E4BA] rounded-md hover:shadow-md hover:cursor-pointer hover:bg-gray-300 hover:text-blue-800' onClick={e => handleResults(e)}>Back to Voting</a>
                         </React.Fragment>
                         : 
                         <React.Fragment>
-                            {props.loading ? <></> : state.poll === undefined ? mapStateChoices() : mapChoices()}
+                            {mapChoices()}
                             <div className='mb-10'/>
                             
                             <a className='text-lg p-4 bg-[#F4E4BA] rounded-md hover:shadow-md hover:cursor-pointer hover:bg-gray-300 hover:text-blue-800' onClick={e => handleResults(e)}>Show Results</a>
