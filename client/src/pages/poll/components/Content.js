@@ -51,7 +51,7 @@ const Content = (props) => {
             const handleVote = e => {
                 const request = vote(state.poll._id, index, state.userId);
                 request.then(res => {
-                    setState({poll: state.poll, voted: true, show: true});
+                    //setState({poll: state.poll, voted: true, show: true});
                     socket.emit('vote', state.poll._id);
                     
                 });
@@ -117,26 +117,33 @@ const Content = (props) => {
     useEffect(()=> {
         // Connect to socket
         const sock = io(SOCKET_URL);
+        if (props.loading){
+
+        }else{
+            sock?.emit('joinPoll', props.poll._id, props.userId);
+        }
         setState({...state, poll: props.poll})
-        socket?.emit('joinPoll', props.poll._id, props.userId);
+        console.log('Props: ',props)
        
-        setSocket(sock)
-        socket?.on('message', (m) => {
+        
+        sock?.on('message', (m) => {
             console.log(m)
         });
         
-        socket?.on('roomUsers', poll => {
+        sock?.on('roomUsers', poll => {
             console.log(poll)
             setState({
                 ...state,
                 poll: poll.poll
             })
         })
-
+        setSocket(sock);
+         
+        /*
         return () => {
             socket?.emit('disconnect', props.userId)
-        }
-    }, [])
+        }*/
+    }, [props.loading])
 
     return (
         <section className='bg-[#AF4D98] w-full min-h-screen text-center font-mono pt-20 pb-20'>

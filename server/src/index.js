@@ -81,9 +81,7 @@ io.on('connection', async (socket) => {
                     createdBy: poll.createdBy,
 
                 }*/
-                io.emit('roomUsers', {
-                    poll: poll
-                });
+                io.emit('roomUsers', poll);
                 /*
                 io.to(pollId).emit('roomUsers', {
                     poll: poll
@@ -91,7 +89,7 @@ io.on('connection', async (socket) => {
 
             
         })
-
+ 
     });
      
     socket.on('disconnect', () => {
