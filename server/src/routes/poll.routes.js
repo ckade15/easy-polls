@@ -31,5 +31,8 @@ router
 router
     .route('/current')
     .get(controller.getCurrentPolls)
+router
+    .route('/get/:userId')
+    .get(controller.getProfilePolls)
 
 module.exports = router;

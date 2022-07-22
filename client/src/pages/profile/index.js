@@ -1,17 +1,25 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import { Navigate } from "react-router-dom";
 import Footer from "../../common/footer";
 import Header from "../../common/header";
 import UserContext from "../../setup/app-context-manager";
 import { checkToken } from "../../setup/auth";
 import Content from "./components/Content";
+import Poll from "./components/ProfilePoll";
 
 const Profile = (props) => {
     const [context, setContext] = useContext(UserContext);
+    const [state, setState] = useState({
+        loading: true
+    })
 
     useEffect(()=> {
-        alreadyLoggedIn();
-        document.title = 'EasyPolls - Profile'
+        if (state.loading){
+            alreadyLoggedIn();
+            document.title = 'EasyPolls - Profile';
+            setState({loading: false})
+
+        }
     }, [context.loggedIn]);
 
     const alreadyLoggedIn = () => {
@@ -48,7 +56,8 @@ const Profile = (props) => {
         <React.Fragment>
             <Header page="Profile" />
             {context.loggedIn ? <Navigate to='/login' /> : <></>}
-            <Content first={context.firstName} last={context.lastName} email={context.email} />
+            <Content first={context.firstName} last={context.lastName} email={context.email} loading={state.loading}/>
+            <Poll loading={state.loading} userId={context._id} />
             <Footer />
         </React.Fragment>
     );

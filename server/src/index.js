@@ -64,8 +64,6 @@ io.on('connection', async (socket) => {
 
 
             p.then(poll => {
-                console.log()
-            
                 if (voted === true){
                     console.log('voted already')
                     io.to(pollId).emit('join', {

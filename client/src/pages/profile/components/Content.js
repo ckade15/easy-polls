@@ -3,6 +3,7 @@ import UserContext from '../../../setup/app-context-manager';
 import edit from '../../../assets/edit.svg';
 import Input from './Input';
 import UpdatePassword from './UpdatePassword';
+import Poll from './ProfilePoll';
 
 function Content(props) {
     const [context, setContext] = useContext(UserContext);

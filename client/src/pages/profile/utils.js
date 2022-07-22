@@ -21,6 +21,12 @@ const updatePassword = async (id, value, token) => {
     return response;
 }
 
-const utils = {confirm, updatePassword};
+const POLL_ROUTE = 'http://localhost:5001/api/poll/get'
+const getUserPolls = async (userId) => {
+    const response = await axios.get(`${POLL_ROUTE}/${userId}`);
+    return response;
+}
+
+const utils = {confirm, updatePassword, getUserPolls};
 
 export default utils;
