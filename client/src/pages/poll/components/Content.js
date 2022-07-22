@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useCallback} from 'react';
 import { getIp, vote } from '../utils';
 import socketio, { io } from 'socket.io-client';
 import { SOCKET_URL } from '../../../setup/auth/config';
@@ -114,6 +114,14 @@ const Content = (props) => {
         })
     }
 
+    const stateCallback = useCallback(
+        poll => setState({
+            ...state,
+            show: true,
+            poll: poll
+        }), [setState]
+    )
+
     useEffect(()=> {
         // Connect to socket
         const sock = io(SOCKET_URL);
@@ -140,11 +148,7 @@ const Content = (props) => {
         
         sock?.on('roomUsers', poll => {
             console.log(poll)
-            setState({
-                ...state,
-                show: true,
-                poll: poll.poll
-            });
+            stateCallback(poll.poll)
         })
         setSocket(sock);
          

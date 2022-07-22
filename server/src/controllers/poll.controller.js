@@ -139,12 +139,14 @@ exports.vote = async (req, res, next) => {
             }
             
             poll.hasVoted.map((user)=>{
+                /*
+                Removing vote protections in order to check if vote value is updating
                 if (user.userVoterId == userId){
                     return res.status(200).json({
                         success: false,
                         message: "User has already voted"
                     })
-                }
+                }*/
             });
             poll.totalVotes = poll.totalVotes+1;
             poll.item[index].votes++;
