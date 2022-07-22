@@ -23,7 +23,9 @@ const updatePassword = async (id, value, token) => {
 
 const POLL_ROUTE = 'http://localhost:5001/api/poll/get'
 const getUserPolls = async (userId) => {
-    const response = await axios.get(`${POLL_ROUTE}/${userId}`);
+    const response = await axios.get(`${POLL_ROUTE}/${userId}`).then(res => {
+        return res
+    });
     return response;
 }
 

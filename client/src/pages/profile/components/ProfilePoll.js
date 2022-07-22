@@ -11,16 +11,14 @@ const ProfilePoll = (props) => {
     
     useEffect(() => {
         if (props.loading){
-
+            
         }else{
             console.log(context.id)
-            try{
-                const userPolls = getUserPolls(context.id);
-                setState({polls: userPolls})
-            }catch{
-
-            }
-            
+            //const userPolls = getUserPolls(context.id);
+            /*
+            userPolls.then(polls => {
+                //setState({polls: polls})
+            })*/
         }
         console.log(props)
     }, [props.loading, context.id])
