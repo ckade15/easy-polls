@@ -129,13 +129,22 @@ const Content = (props) => {
         sock?.on('message', (m) => {
             console.log(m)
         });
-        
-        sock?.on('roomUsers', poll => {
+
+        sock?.on('join', poll => {
             console.log(poll)
             setState({
                 ...state,
                 poll: poll.poll
             })
+        })
+        
+        sock?.on('roomUsers', poll => {
+            console.log(poll)
+            setState({
+                ...state,
+                show: true,
+                poll: poll.poll
+            });
         })
         setSocket(sock);
          

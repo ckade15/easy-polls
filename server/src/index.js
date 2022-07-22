@@ -42,7 +42,7 @@ io.on('connection', async (socket) => {
         userId: socket.id
     });
 
-    socket.on('joinPoll', ( userId, pollId ) => {
+    socket.on('joinPoll', ( pollId, userId ) => {
         console.log('join attempt')
         console.log(userId, pollId)
         try{
@@ -60,10 +60,14 @@ io.on('connection', async (socket) => {
     
             // Send users and poll info
             const p = getPoll(pollId)
+            //console.log(pollId)
+            p.then(poll => {
+                io.to(pollId).emit('join', {
+                    poll: poll
+                })
+            })
 
-            io.to(pollId).emit('roomUsers', {
-                poll: p
-            });
+            
         }catch(e){
             console.log(e)
         }
@@ -75,19 +79,8 @@ io.on('connection', async (socket) => {
         const p = getPoll(pollId)
         p.then(poll => {
             console.log(poll)
-            /*
-                const pa = {
-                    id: poll.id,
-                    createdBy: poll.createdBy,
 
-                }*/
-                io.emit('roomUsers', poll);
-                /*
-                io.to(pollId).emit('roomUsers', {
-                    poll: poll
-                });*/
-
-            
+            io.emit('roomUsers', {poll: poll});            
         })
  
     });
