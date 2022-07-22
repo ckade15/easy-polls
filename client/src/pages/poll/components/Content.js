@@ -134,7 +134,7 @@ const Content = (props) => {
         })
 
         return () => {
-            
+            socket?.emit('disconnect', props.userId)
         }
     }, [])
 
