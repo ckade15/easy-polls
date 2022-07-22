@@ -287,18 +287,29 @@ exports.deletePoll = async (req, res, next) => {
                 }
                 if (valid){
                     const dele = async (id) => {
-                        const p = await Poll.findById(id);
-                        if (!p){
-                            return res.status(200).json({
-                                success: false, 
-                                message: 'Poll not found'
-                            })
-                        }
-                        await p.remove();
+                        const p = await Poll.findByIdAndDelete(id)
+                        p.save()
                         return p;
                     }
 
-                    dele(pollId);
+                    dele(pollId).then(poll => {
+                        if (!poll){
+                            return res.status(200).json({
+                                success: false,
+                                message: 'Poll not found'
+                            })
+                        }else{
+                            return res.status(200).json({
+                                success: true,
+                                message: 'Poll deleted successfully'
+                            })
+                        }
+                    }).catch(() => {
+                        return res.status(200).json({
+                            success: false,
+                            message: 'Poll not deleted'
+                        })
+                    });
                     
                 }
             });
