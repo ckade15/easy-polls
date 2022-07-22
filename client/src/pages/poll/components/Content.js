@@ -18,7 +18,7 @@ const Content = (props) => {
 
     const checkVoted = () => {
         props.poll.hasVoted.map(poll => {
-            if (poll._id == props.userId){
+            if (poll.voterUserId == props.userId){
                 console.log('has voted')
                 setState({...state, voted: true, show: true})
             }
@@ -30,7 +30,6 @@ const Content = (props) => {
             const handleVote = e => {
                 const request = vote(props.poll._id, index, props.userId);
                 request.then(res => {
-                    //setPoll(props.poll)
                     setState({poll: props.poll, voted: true, show: true});
                     socket.emit('vote', props.poll._id);
                     
@@ -73,7 +72,7 @@ const Content = (props) => {
     }
 
     const mapStateResults = () => {
-        const choices = poll.item.map((item, index) => {
+        const choices = state.poll.item.map((item, index) => {
             // Handles display percentage
             let percentage = (item.votes / state.poll.totalVotes) * 100;
             percentage = parseFloat(percentage).toFixed(1);
@@ -118,18 +117,14 @@ const Content = (props) => {
         })
     }
 
-    const showRes = useCallback(() => {
-        return ;
-    }, [])
+    
 
     useEffect(()=> {
         // Connect to socket
         const sock = io(SOCKET_URL);
-        if (props.loading){
-
-        }else{
-            sock?.emit('joinPoll', props.poll._id, props.userId);
-        }
+        
+        sock?.emit('joinPoll', props.poll._id, props.userId);
+        
         setState({...state, poll: props.poll})
         
         console.log('Props: ',props)
@@ -160,10 +155,10 @@ const Content = (props) => {
          
         console.log(state.poll)
         return () => {
-            socket?.emit('disconnect', props.userId)
+            
 
         }
-    }, [props.loading, showRes])
+    }, [props.loading])
 
     return (
         <section className='bg-[#AF4D98] w-full min-h-screen text-center font-mono pt-20 pb-20'>
@@ -175,7 +170,7 @@ const Content = (props) => {
                 {props.poll.pollStatus || state.voted ? 
                     <>{state.show ? 
                         <React.Fragment>
-                            {props.loading ? <></> : (state.poll === undefined ? mapStateResults() : mapResults())}
+                            {state.poll !== undefined ? mapStateResults() : mapResults()}
                             <div className='mb-10' />
                             <a className='text-lg p-4 bg-[#F4E4BA] rounded-md hover:shadow-md hover:cursor-pointer hover:bg-gray-300 hover:text-blue-800' onClick={e => handleResults(e)}>Back to Voting</a>
                         </React.Fragment>
