@@ -151,6 +151,7 @@ const Content = (props) => {
         /*
         return () => {
             socket?.emit('disconnect', props.userId)
+            state.poll.item.votes
         }*/
     }, [props.loading])
 
