@@ -20,7 +20,6 @@ const Poll = (props) => {
 
     let {pollId} = useParams();
 
-
     useEffect(() => {
         alreadyLoggedIn();
         if (state.loading){

@@ -9,6 +9,7 @@ const Content = (props) => {
         voted: false,
         show: false,
         error: '',
+        poll: undefined
     });
 
     const [socket, setSocket] = useState();
@@ -44,6 +45,48 @@ const Content = (props) => {
         })
         return choices;
     }
+
+    const mapStateChoices = () => {
+        const choices = state.poll.item.map((item, index) => {
+            const handleVote = e => {
+                const request = vote(state.poll._id, index, state.userId);
+                request.then(res => {
+                    setState({poll: state.poll, voted: true, show: true});
+                    socket.emit('vote', state.poll._id);
+                    
+                });
+                request.catch(e => console.log(e))
+            }         
+            
+            return (
+                <a name={index} onClick={e => handleVote(e)} 
+                className='block hover:cursor-pointer mb-8 text-lg bg-[#AF4D98] rounded-md p-4 text-white 
+                font-bold hover:shadow-lg hover:bg-white hover:border-2 hover:border-[#AF4D98] hover:text-[#AF4D98] 
+                border-2 border-[#AF4D98]' key={item.name}>{item.name}</a>
+            )
+        })
+        return choices;
+    }
+
+    const mapStateResults = () => {
+        const choices = state.poll.item.map((item, index) => {
+            // Handles display percentage
+            let percentage = (item.votes / state.poll.totalVotes) * 100;
+            percentage = parseFloat(percentage).toFixed(1);
+            if (item.votes === 0){
+                percentage = 0
+            }
+            
+            return (<a name={index}
+                className='block hover:cursor-pointer mb-8 text-lg bg-[#AF4D98] rounded-md p-4 text-white 
+                font-bold hover:shadow-lg hover:bg-white hover:border-2 hover:border-[#AF4D98] hover:text-[#AF4D98] 
+                border-2 border-[#AF4D98]' key={item.name}>{item.name}&nbsp; {percentage}%&nbsp; &nbsp;{item.votes} Votes</a>
+            )
+        });
+        return choices
+    }
+
+
 
     const mapResults = () => {
         const choices = props.poll.item.map((item, index) => {
@@ -88,16 +131,16 @@ const Content = (props) => {
             
             socket?.on('roomUsers', (poll) => {
                 console.log(poll)
-                /*props.setParent({
-                    ...props.parentState,
-                    poll: poll
-                })*/
+                setState({
+                    ...state,
+                    poll: poll.poll
+                })
             })
         }
         return () => {
             
         }
-    }, [state.userId, state.show, props.loading])
+    }, [state.userId, state.show, props.loading, state.poll])
 
     return (
         <section className='bg-[#AF4D98] w-full min-h-screen text-center font-mono pt-20 pb-20'>
@@ -109,13 +152,13 @@ const Content = (props) => {
                 {props.poll.pollStatus || state.voted ? 
                     <>{state.show ? 
                         <React.Fragment>
-                            {props.loading ? <></> : mapResults()}
+                            {props.loading ? <></> : state.poll === undefined ? mapStateResults() : mapResults()}
                             <div className='mb-10' />
                             <a className='text-lg p-4 bg-[#F4E4BA] rounded-md hover:shadow-md hover:cursor-pointer hover:bg-gray-300 hover:text-blue-800' onClick={e => handleResults(e)}>Back to Voting</a>
                         </React.Fragment>
                         : 
                         <React.Fragment>
-                            {props.loading ? <></> : mapChoices()}
+                            {props.loading ? <></> : state.poll === undefined ? mapStateChoices() : mapChoices()}
                             <div className='mb-10'/>
                             
                             <a className='text-lg p-4 bg-[#F4E4BA] rounded-md hover:shadow-md hover:cursor-pointer hover:bg-gray-300 hover:text-blue-800' onClick={e => handleResults(e)}>Show Results</a>
