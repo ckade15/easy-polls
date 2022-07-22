@@ -46,11 +46,9 @@ const leavePoll = (id) => {
 
 
 const getPoll = async (pollId) => {
-
     const p = await Poll.findById(pollId).then(pl => {
         poll = pl
     })
-    //console.log(pl)
     return poll
 }
 

@@ -88,10 +88,10 @@ const Content = (props) => {
             
             socket?.on('roomUsers', (poll) => {
                 console.log(poll)
-                props.setParent({
+                /*props.setParent({
                     ...props.parentState,
                     poll: poll
-                })
+                })*/
             })
         }
         return () => {

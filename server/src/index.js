@@ -44,6 +44,7 @@ io.on('connection', async (socket) => {
 
     socket.on('joinPoll', ( userId, pollId ) => {
         console.log('join attempt')
+        console.log(userId, pollId)
         try{
             
             const user = joinPoll(userId, pollId)
@@ -70,17 +71,21 @@ io.on('connection', async (socket) => {
     // Listen for poll votes
     socket.on('vote', (pollId) => {
         const user = vote(pollId);
-        //console.log(pollId)
         console.log('Vote attempt')
         const p = getPoll(pollId)
         p.then(poll => {
+            console.log(poll)
+            /*
                 const pa = {
-                    id: poll._id,
+                    id: poll.id,
                     createdBy: poll.createdBy,
 
-                }
+                }*/
+                io.emit('roomUsers', {
+                    poll: poll
+                })
                 io.to(pollId).emit('roomUsers', {
-                    poll: pa
+                    poll: poll
                 });
 
             
