@@ -44,7 +44,7 @@ const PageNotFound = (props) => {
     return (
         <React.Fragment>
             <Header />
-            <section className="bg-[#AF4D98] w-full min-h-screen text-center font-mono pt-20 font-mono ">
+            <section className="bg-[#AF4D98] w-full min-h-screen text-center pt-20 font-mono ">
                 <div className="w-2/3 ml-auto mr-auto mt-10 p-20 bg-[#9DF7E5] rounded-md shadow-xl">
                     <p className="text-4xl font-bold">Uh oh... 404 Error</p>
                     <p className="mt-4 text-xl mb-10">The page you are looking for does not exist.</p>
